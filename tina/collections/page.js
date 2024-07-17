@@ -77,6 +77,14 @@ export default {
           label: "Description Paragraph 1",
           type: "string",
           description: "The first paragraph for description",
+          validate: (value) => {
+            if (!value || value.trim() === "") {
+              return "This field is required.";
+            }
+            if (value.length > 10) {
+              return "Must be less than 10 characters";
+            }
+          },
         },
         {
           name: "aboutPara2",
@@ -308,16 +316,25 @@ export default {
           defaultItem: () => {
             return {
               title: "New Workshop",
-              year: new Date().getFullYear(),
+              year: new Date().toISOString(),
               location: "Location",
             };
           },
           ui: {
             itemProps: (item) => ({
-              label: item?.title || "Untitled Workshop",
+              label: item?.year?.split("-")[0] || "Untitled Workshop",
             }),
           },
           fields: [
+            {
+              name: "year",
+              label: "Year",
+              type: "datetime",
+              description: "The year for the workshop",
+              ui: {
+                dateFormat: "YYYY",
+              },
+            },
             {
               name: "title",
               label: "Title",
@@ -326,23 +343,32 @@ export default {
               required: true,
             },
             {
-              name: "year",
-              label: "Year",
+              name: "description",
+              label: "Description",
               type: "string",
-              description: "The year for the workshop",
-              required: true,
+              description: "The description for the workshop",
             },
             {
-              name: "location",
-              label: "Location",
-              type: "string",
-              description: "The location for the workshop",
-              required: true,
-              validate: (value) => {
-                if (value.length > 10) {
-                  return "Must be less than 10 characters";
-                }
+              name: "images",
+              label: "Images",
+              type: "object",
+              description: "The list of images for the workshop",
+              list: true,
+              ui: {
+                itemProps: (item) => ({
+                  label: item?.image
+                    ? item.image.split("/").pop()
+                    : "Untitled Image",
+                }),
               },
+              fields: [
+                {
+                  name: "image",
+                  label: "Image",
+                  type: "image",
+                  description: "Add an image",
+                },
+              ],
             },
           ],
         },
