@@ -1,3 +1,4 @@
+import { max } from "lodash";
 import { FieldDescription } from "tinacms";
 
 /**
@@ -275,6 +276,73 @@ export default {
               label: "University",
               type: "string",
               description: "The university for the workshop facilitator",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "workshopsSection",
+      label: "Past Workshops Section",
+      type: "object",
+      fields: [
+        {
+          name: "workshopsToggle",
+          label: "Display Past Workshops Section",
+          type: "boolean",
+          description: "Toggle the display of the section",
+        },
+        {
+          name: "sortWorkshops",
+          label: "Sort Workshops",
+          type: "string",
+          description: "Sort the workshops by year or manually",
+          options: ["Year (most recent first)", "Manual"],
+        },
+        {
+          name: "workshops",
+          label: "Workshops",
+          type: "object",
+          description: "The list of past workshops",
+          list: true,
+          defaultItem: () => {
+            return {
+              title: "New Workshop",
+              year: new Date().getFullYear(),
+              location: "Location",
+            };
+          },
+          ui: {
+            itemProps: (item) => ({
+              label: item?.title || "Untitled Workshop",
+            }),
+          },
+          fields: [
+            {
+              name: "title",
+              label: "Title",
+              type: "string",
+              description: "The title for the workshop",
+              required: true,
+            },
+            {
+              name: "year",
+              label: "Year",
+              type: "string",
+              description: "The year for the workshop",
+              required: true,
+            },
+            {
+              name: "location",
+              label: "Location",
+              type: "string",
+              description: "The location for the workshop",
+              required: true,
+              validate: (value) => {
+                if (value.length > 10) {
+                  return "Must be less than 10 characters";
+                }
+              },
             },
           ],
         },
