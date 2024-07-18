@@ -161,7 +161,12 @@ export default {
           label: "Sort Research",
           type: "string",
           description: "Sort the research by date, title, or manually",
-          options: ["Date (most recent first)", "Title (A-Z)", "Manual"],
+          options: [
+            "Date (most recent first)",
+            "Title (A-Z)",
+            "Author (A-Z)",
+            "Manual",
+          ],
         },
         {
           name: "researchItems",
@@ -225,7 +230,6 @@ export default {
               label: "PDF",
               type: "image",
               description: "The PDF for the research paper",
-              required: true,
             },
           ],
         },
@@ -276,6 +280,13 @@ export default {
               label: "Sponsor Link",
               type: "string",
               description: "The link for the sponsor, e.g. https://example.com",
+            },
+            {
+              name: "sponsorLinkDisplayText",
+              label: "Sponsor Link Display Text",
+              type: "string",
+              description:
+                "The text for the link (defaults to 'Find out more' if empty)",
             },
           ],
         },
@@ -372,6 +383,12 @@ export default {
               label: "Description",
               type: "string",
               description: "The description for the workshop",
+            },
+            {
+              name: "poster",
+              label: "Poster",
+              type: "image",
+              description: "The poster for the workshop",
             },
             {
               name: "images",
