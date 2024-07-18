@@ -77,14 +77,14 @@ export default {
           label: "Description Paragraph 1",
           type: "string",
           description: "The first paragraph for description",
-          validate: (value) => {
-            if (!value || value.trim() === "") {
-              return "This field is required.";
-            }
-            if (value.length > 10) {
-              return "Must be less than 10 characters";
-            }
-          },
+          // validate: (value) => {
+          //   if (!value || value.trim() === "") {
+          //     return "This field is required.";
+          //   }
+          //   if (value.length > 10) {
+          //     return "Must be less than 10 characters";
+          //   }
+          // },
         },
         {
           name: "aboutPara2",
@@ -115,6 +115,31 @@ export default {
               type: "string",
               description:
                 "The link for the action button, e.g. https://example.com",
+            },
+          ],
+        },
+        {
+          name: "downloadButton",
+          label: "Download Button",
+          type: "object",
+          fields: [
+            {
+              name: "actionButtonToggle",
+              label: "Display Download Button",
+              type: "boolean",
+              description: "Toggle the display of the download button",
+            },
+            {
+              name: "actionButton",
+              label: "Download Button",
+              type: "string",
+              description: "The text for the download button",
+            },
+            {
+              name: "downloadButtonFile",
+              label: "Download Button File",
+              type: "image",
+              description: "The file for the download button",
             },
           ],
         },
@@ -306,17 +331,6 @@ export default {
           type: "string",
           description: "Sort the workshops by year or manually",
           options: ["Year (most recent first)", "Manual"],
-        },
-        {
-          name: "colorPicker",
-          label: "Color Picker",
-          type: "string",
-          description: "Choose a color",
-          ui: {
-            component: "color",
-            colorFormat: "hex",
-            widget: "sketch",
-          },
         },
         {
           name: "workshops",
