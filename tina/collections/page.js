@@ -308,6 +308,17 @@ export default {
           options: ["Year (most recent first)", "Manual"],
         },
         {
+          name: "colorPicker",
+          label: "Color Picker",
+          type: "string",
+          description: "Choose a color",
+          ui: {
+            component: "color",
+            colorFormat: "hex",
+            widget: "sketch",
+          },
+        },
+        {
           name: "workshops",
           label: "Workshops",
           type: "object",
@@ -371,6 +382,161 @@ export default {
               ],
             },
           ],
+        },
+      ],
+    },
+    {
+      name: "footer",
+      label: "Footer",
+      type: "object",
+      fields: [
+        {
+          name: "footerToggle",
+          label: "Display Footer",
+          type: "boolean",
+          description: "Toggle the display of the footer",
+        },
+        {
+          name: "footerText",
+          label: "Footer Text",
+          type: "rich-text",
+          description: "The text for the footer",
+        },
+        {
+          name: "contactEmail",
+          label: "Contact Email",
+          type: "object",
+          fields: [
+            {
+              name: "contactEmailToggle",
+              label: "Display Contact Email",
+              type: "boolean",
+              description: "Toggle the display of the contact email",
+            },
+            {
+              name: "contactEmail",
+              label: "Contact Email",
+              type: "string",
+              description: "The email for the contact email",
+            },
+            {
+              name: "contactEmailText",
+              label: "Contact Email Text",
+              type: "string",
+              description: "The text for the contact email (optional)",
+            },
+          ],
+        },
+        {
+          name: "footerLegalPages",
+          label: "Footer Legal Pages",
+          type: "object",
+          description: "The list of legal pages in the footer",
+          list: true,
+          defaultItem: () => {
+            return {
+              title: "New Page",
+              content: "Content",
+            };
+          },
+          ui: {
+            itemProps: (item) => ({
+              label: item?.title || "Untitled Page",
+            }),
+          },
+          fields: [
+            {
+              name: "title",
+              label: "Title",
+              type: "string",
+              description: "The title for the legal page",
+              required: true,
+            },
+            {
+              name: "content",
+              label: "Content",
+              type: "rich-text",
+              description: "The content for the legal page",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      name: "themeSection",
+      label: "Theme",
+      type: "object",
+      fields: [
+        {
+          name: "textColor",
+          label: "Text Color",
+          type: "string",
+          description: "Choose a color for the text",
+          ui: {
+            component: "color",
+            colorFormat: "hex",
+            widget: "sketch",
+          },
+        },
+        {
+          name: "backgroundColor1",
+          label: "Background Color 1",
+          type: "string",
+          description:
+            "Choose a color for the background (this is the primary section color starting from the hero section)",
+          ui: {
+            component: "color",
+            colorFormat: "hex",
+            widget: "sketch",
+          },
+        },
+        {
+          name: "backgroundColor2",
+          label: "Background Color 2",
+          type: "string",
+          description:
+            "Choose a color for the background (this is the secondary section color starting from the research section)",
+          ui: {
+            component: "color",
+            colorFormat: "hex",
+            widget: "sketch",
+          },
+        },
+        {
+          name: "backgroundColor3",
+          label: "Background Color 3",
+          type: "string",
+          description:
+            "Choose a color for the background (this is the tertiary section color used for the links in the research section)",
+          ui: {
+            component: "color",
+            colorFormat: "hex",
+            widget: "sketch",
+          },
+        },
+        {
+          name: "highlightColor",
+          label: "Highlight Color",
+          type: "string",
+          description:
+            "Choose a color for the highlight (this is the color used for some buttons)",
+          ui: {
+            component: "color",
+            colorFormat: "hex",
+            widget: "sketch",
+          },
+        },
+        {
+          name: "buttonColor",
+          label: "Button Color",
+          type: "string",
+          description:
+            "Choose a color for the buttons (this is the color used for the buttons, the border, the text, and the hover color)",
+          ui: {
+            component: "color",
+            colorFormat: "hex",
+            widget: "sketch",
+          },
         },
       ],
     },
