@@ -358,7 +358,9 @@ export default {
           },
           ui: {
             itemProps: (item) => ({
-              label: item?.year?.split("-")[0] || "Untitled Workshop",
+              label: item?.year
+                ? new Date(item.year).getFullYear().toString()
+                : "Untitled Workshop",
             }),
           },
           fields: [
