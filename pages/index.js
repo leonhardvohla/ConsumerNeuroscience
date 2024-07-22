@@ -155,7 +155,7 @@ export default function HomePage(props) {
           ></div>
           <img
             alt="main image"
-            className="hidden md:flex w-max bg-contain bg-no-repeat my-10 lg:my-12 rounded-lg"
+            className="hidden md:flex w-max bg-contain bg-no-repeat my-10 lg:my-12 rounded-md"
             data-tina-field={tinaField(data.page.heroSection, "mainImage")}
             src={data.page.heroSection.mainImage}
           />
