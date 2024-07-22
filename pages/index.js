@@ -23,6 +23,9 @@ export default function HomePage(props) {
   const highlightColor = data.page.themeSection.highlightColor;
   const hoverColor = data.page.themeSection.hoverColor;
   const unactivatedColor = data.page.themeSection.unactivatedColor;
+  const unactivatedHighlightTextColor =
+    data.page.themeSection.unactivatedHighlightTextColor;
+  const highlightTextColor = data.page.themeSection.highlightTextColor;
 
   const ActionButton = ({
     actionButtonToggle,
@@ -64,7 +67,7 @@ export default function HomePage(props) {
     );
   };
 
-  const DynamicSvg = ({ src, color, className, key = undefined }) => {
+  const DynamicSvg = ({ src, color, className }) => {
     const [svgContent, setSvgContent] = useState(null);
 
     useEffect(() => {
@@ -75,13 +78,14 @@ export default function HomePage(props) {
           const svgDoc = parser.parseFromString(text, "image/svg+xml");
           const svgElement = svgDoc.documentElement;
 
-          // Set the fill color on the SVG element itself
-          svgElement.setAttribute("fill", color);
-
-          // Remove any hardcoded colors from child elements
+          // Set the color for both stroke and fill
           svgElement.querySelectorAll("*").forEach((el) => {
-            el.removeAttribute("fill");
-            el.removeAttribute("stroke");
+            if (el.getAttribute("stroke")) {
+              el.setAttribute("stroke", color);
+            }
+            if (el.getAttribute("fill") && el.getAttribute("fill") !== "none") {
+              el.setAttribute("fill", color);
+            }
           });
 
           setSvgContent(svgElement.outerHTML);
@@ -209,6 +213,7 @@ export default function HomePage(props) {
               <a
                 href={data.page.heroSection.downloadButton.downloadButtonFile}
                 target="_blank"
+                rel="noopener noreferrer"
                 className="order-2 mx-auto md:mx-0 text-xs lg:text-sm xl:text-base font-semibold flex flex-row md:my-auto items-center"
               >
                 <div
@@ -219,7 +224,7 @@ export default function HomePage(props) {
                 >
                   {data.page.heroSection.downloadButton.actionButton}
                 </div>
-                <div className="ml-1.5 md:ml-2 h-2.5 md:h-3 w-2.5 md:w-3 md:-mt-0.5">
+                <div className="w-3 h-3 ml-1 flex items-center justify-center">
                   <DynamicSvg
                     src={download.src}
                     color={fontColor}
@@ -285,45 +290,48 @@ export default function HomePage(props) {
               gridAutoRows: "auto",
             }}
           >
-            {data.page.researchSection.researchItems.map((item) => {
+            {data.page.researchSection.researchItems.map((item, index) => {
               console.log("Current fontColor:", fontColor);
               return (
-                <div class="flex flex-col md:flex-row justify-center mt-8 gap-4">
-                  <div class="p-4.5 flex flex-col bg-white shadow-2xl shadow-stone-200/50 border border-slate-100 rounded-lg h-full">
+                <div className="flex flex-col md:flex-row justify-center mt-8 gap-4">
+                  <div className="p-4.5 flex flex-col bg-white shadow-2xl shadow-stone-200/50 border border-slate-100 rounded-lg h-full">
                     <div
-                      class="text-sm font-semibold leading-4.5"
+                      className="text-sm font-semibold leading-4.5"
                       data-tina-field={tinaField(item, "title")}
                     >
                       {item.title}
                     </div>
                     <div
-                      class="pt-1.5 text-xs font-extralight mt-0 mb-3"
+                      className="pt-1.5 text-xs font-extralight mt-0 mb-3"
                       data-tina-field={tinaField(item, "authors")}
                     >
                       {item.authors}
                     </div>
-                    <div class="flex flex-row mt-auto justify-self-end">
+                    <div className="flex flex-row mt-auto justify-self-end">
                       <a
                         href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         data-tina-field={tinaField(item, "link")}
-                        class="flex flex-row bg-slate-100 rounded-lg h-12 px-3 flex-1"
+                        className="flex flex-row bg-slate-100 rounded-lg h-12 px-3 flex-1"
                       >
                         <div className="w-5 h-5 mr-1 my-auto -rotate-45">
                           <DynamicSvg
                             src={link.src}
                             color={fontColor}
                             className="w-full h-full"
-                            key={fontColor}
+                            key={index}
                           />
                         </div>
-                        <div class="text-xs my-auto">{item.journal}</div>
+                        <div className="text-xs my-auto">{item.journal}</div>
                       </a>
 
                       <a
                         href={item.pdf || "#"}
                         target="_blank"
+                        rel="noopener noreferrer"
                         data-tina-field={tinaField(item, "pdf")}
-                        className={`flex flex-row rounded-lg h-12 w-12 bg-slate-300 ml-3 ${
+                        className={`flex flex-row rounded-lg h-12 w-12 ml-3 ${
                           item.pdf ? "cursor-pointer" : "cursor-default"
                         }`}
                         style={{
@@ -337,13 +345,17 @@ export default function HomePage(props) {
                           }
                         }}
                       >
-                        <img
-                          alt="download icon"
-                          class={`h-5 mx-auto my-auto ${
-                            item.pdf ? "" : "opacity-50"
-                          }`}
-                          src={download.src}
-                        />
+                        <div className="h-4 w-4 mx-auto my-auto">
+                          <DynamicSvg
+                            src={download.src}
+                            color={
+                              item.pdf
+                                ? highlightTextColor
+                                : unactivatedHighlightTextColor
+                            }
+                            className="w-full h-full"
+                          />
+                        </div>
                       </a>
                     </div>
                   </div>
