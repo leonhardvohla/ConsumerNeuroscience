@@ -4,7 +4,9 @@ import { client } from "../tina/__generated__/client";
 import { ReactSVG } from "react-svg";
 
 import menu from "../public/icons/menu.svg";
-import download_black from "../public/icons/download-black.svg";
+import download from "../public/icons/download.svg";
+import link from "../public/icons/link.svg";
+import { da } from "date-fns/locale";
 
 export default function HomePage(props) {
   const { data } = useTina({
@@ -19,6 +21,7 @@ export default function HomePage(props) {
   const backgroundColor3 = data.page.themeSection.backgroundColor3;
   const highlightColor = data.page.themeSection.highlightColor;
   const hoverColor = data.page.themeSection.hoverColor;
+  const unactivatedColor = data.page.themeSection.unactivatedColor;
 
   const ActionButton = ({
     actionButtonToggle,
@@ -38,7 +41,7 @@ export default function HomePage(props) {
         href={actionButtonLink}
         target="_blank"
         rel="noopener noreferrer"
-        className={`group text-xs lg:text-sm xl:text-base my-auto border px-4 py-2 rounded-full font-semibold transition-colors duration-300 ease-in-out relative overflow-hidden ${additionalClasses}`}
+        className={`actionButton group text-xs lg:text-sm xl:text-base my-auto border px-4 py-2 rounded-full font-semibold transition-colors duration-300 ease-in-out relative overflow-hidden ${additionalClasses}`}
         style={{
           borderColor: fontColor,
           color: fontColor,
@@ -82,7 +85,11 @@ export default function HomePage(props) {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: backgroundColor1,
+      }}
+    >
       <div className="fixed top-0 left-0 w-12 h-12 bg-blue-400 sm:bg-green-300 md:bg-yellow-400 lg:bg-red-300 xl:bg-purple-300">
         hi
       </div>
@@ -198,7 +205,7 @@ export default function HomePage(props) {
                 </div>
                 <div className="ml-1.5 md:ml-2 h-2.5 md:h-3 w-2.5 md:w-3 md:-mt-0.5">
                   <DynamicSvg
-                    src={download_black.src}
+                    src={download.src}
                     color={fontColor}
                     className="w-full h-full"
                   />
@@ -218,6 +225,132 @@ export default function HomePage(props) {
               tinaField={tinaField(data.page.heroSection, "actionButton")}
               additionalClasses="order-1 mx-auto md:mx-0 text-xs lg:text-sm xl:text-base my-auto "
             />
+          </div>
+        </div>
+      )}
+      {data.page.researchSection.researchToggle && (
+        <div
+          className="px-16 sm:px-20 md:px-24 lg:px-32 mt-12 md:mt-14 xl:mt-18 py-10"
+          style={{ color: fontColor, backgroundColor: backgroundColor2 }}
+          id="researchSection"
+        >
+          <div className="flex flex-row justify-center md:justify-between">
+            <div className="text-2xl lg:text-3xl xl:text-4xl text-center md:text-left">
+              Recent Research
+            </div>
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`hidden md:flex actionButton group text-xs lg:text-sm xl:text-base my-auto border px-4 py-2 rounded-full font-semibold transition-colors duration-300 ease-in-out relative overflow-hidden mr-0 mt-2.5`}
+              style={{
+                borderColor: fontColor,
+                color: fontColor,
+                "--button-color": fontColor,
+                "--hover-color": hoverColor,
+              }}
+            >
+              <span className="relative z-10 transition-colors duration-300 ease-in-out group-hover:text-transparent">
+                See all research +
+              </span>
+              <span
+                className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
+                style={{ color: hoverColor }}
+              >
+                See all research +
+              </span>
+            </a>
+          </div>
+          <hr className="w-auto my-4 bg-stone-500 md:my-6 xl:mb-10" />
+          <div
+            className="grid gap-4"
+            style={{
+              gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+              gridAutoRows: "auto",
+            }}
+          >
+            {data.page.researchSection.researchItems.map((item, index) => (
+              <div class="flex flex-col md:flex-row justify-center mt-8 gap-4">
+                <div class="p-4.5 flex flex-col bg-white shadow-2xl shadow-stone-200/50 border border-slate-100 rounded-lg h-full">
+                  <div
+                    class="text-sm font-semibold leading-4.5"
+                    data-tina-field={tinaField(item, "title")}
+                  >
+                    {item.title}
+                  </div>
+                  <div
+                    class="pt-1.5 text-xs font-extralight mt-0 mb-3"
+                    data-tina-field={tinaField(item, "authors")}
+                  >
+                    {item.authors}
+                  </div>
+                  <div class="flex flex-row mt-auto justify-self-end">
+                    <a
+                      href={item.link}
+                      data-tina-field={tinaField(item, "link")}
+                      class="flex flex-row bg-slate-100 rounded-lg h-12 px-3 flex-1"
+                    >
+                      <img
+                        alt="link icon"
+                        class="h-4 mr-1 my-auto -rotate-45"
+                        src={link.src}
+                      />
+                      <div class="text-xs my-auto">{item.journal}</div>
+                    </a>
+                    <a
+                      href={item.pdf || "#"}
+                      target="_blank"
+                      data-tina-field={tinaField(item, "pdf")}
+                      className={`flex flex-row rounded-lg h-12 w-12 bg-slate-300 ml-3 ${
+                        item.pdf ? "cursor-pointer" : "cursor-default"
+                      }`}
+                      style={{
+                        backgroundColor: item.pdf
+                          ? highlightColor
+                          : unactivatedColor,
+                      }}
+                      onClick={(e) => {
+                        if (!item.pdf) {
+                          e.preventDefault();
+                        }
+                      }}
+                    >
+                      <img
+                        alt="download icon"
+                        class={`h-5 mx-auto my-auto ${
+                          item.pdf ? "" : "opacity-50"
+                        }`}
+                        src={download.src}
+                      />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="w-full mt-6 flex flex-col justify-center md:hidden">
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`actionButton group text-xs lg:text-sm xl:text-base my-auto border px-4 py-2 rounded-full font-semibold transition-colors duration-300 ease-in-out relative overflow-hidden mx-auto mt-2.5`}
+              style={{
+                borderColor: fontColor,
+                color: fontColor,
+                "--button-color": fontColor,
+                "--hover-color": hoverColor,
+              }}
+            >
+              <span className="relative z-10 transition-colors duration-300 ease-in-out group-hover:text-transparent">
+                See all research +
+              </span>
+              <span
+                className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
+                style={{ color: hoverColor }}
+              >
+                See all research +
+              </span>
+            </a>
           </div>
         </div>
       )}

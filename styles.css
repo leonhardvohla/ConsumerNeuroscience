@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-a:hover {
+.actionButton:hover {
     background-color: var(--button-color);
 }

@@ -513,7 +513,7 @@ export default {
         },
         {
           name: "hoverColor",
-          label: "Hover Color",
+          label: "Hover Text Color",
           type: "string",
           description:
             "Choose a color for the text inside the buttons when hovered, normally black or white",
@@ -565,6 +565,42 @@ export default {
           type: "string",
           description:
             "Choose a color for the highlight (this is the color used for some buttons)",
+          ui: {
+            component: "color",
+            colorFormat: "hex",
+            widget: "sketch",
+          },
+        },
+        {
+          name: "unactivatedColor",
+          label: "Inactivate Button Color",
+          type: "string",
+          description:
+            "Choose a color for inactivate buttons (this is the color used for the download button when there is no file)",
+          ui: {
+            component: "color",
+            colorFormat: "hex",
+            widget: "sketch",
+          },
+        },
+        {
+          name: "highlightTextColor",
+          label: "Highlight Text Color",
+          type: "string",
+          description:
+            "Choose a color for the text inside the buttons colored with the highlight color",
+          ui: {
+            component: "color",
+            colorFormat: "hex",
+            widget: "sketch",
+          },
+        },
+        {
+          name: "unactivatedHighlightTextColor",
+          label: "Inactivate Highlight Text Color",
+          type: "string",
+          description:
+            "Choose a color for the text inside the inactive buttons colored with the highlight color",
           ui: {
             component: "color",
             colorFormat: "hex",
