@@ -1,4 +1,5 @@
 import { tinaField, useTina } from "tinacms/dist/react";
+import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { client } from "../tina/__generated__/client";
 import { ReactSVG } from "react-svg";
 
@@ -158,36 +159,51 @@ export default function HomePage(props) {
           src={data.page.heroSection.mainImage}
         />
         <div className="mt-8 flex flex-col md:flex-row gap-6 md:justify-between">
-          <div className="text-2xl sm:text-3xl md:text-4xs md:w-400 leading-snug md:leading-normal text-center md:text-left">
-            Celebrate Consumer Neuroscience with Us at the
-            <strong className="font-bold"> 2022 Workshop</strong>
+          <div
+            className="text-2xl sm:text-3xl md:text-4xs md:w-400 leading-snug md:leading-normal text-center md:text-left"
+            data-tina-field={tinaField(data.page.heroSection, "title")}
+          >
+            <TinaMarkdown content={data.page.heroSection.title} />
           </div>
           <div className="font-light text-xs text-center leading-snug md:w-150 md:text-left md:text-3xs md:mt-2">
-            The Fifth ACR Workshop on Consumer Neuroscience will be hosted at
-            the Sheraton Downtown Hotel (the ACR Conference Hotel) in Denver,
-            Colorado on Thursday, October 20, 2022 between 9 and 11:30am. We
-            will meet at the Sheraton Downtown Denver hotel in Plaza Court 3.
-            <br />
-            <br />
-            Join us for a celebration of 15+ years of fMRI work in consumer
-            research and marketing as well as talks and networking
-            opportunities.
+            <div
+              data-tina-field={tinaField(data.page.heroSection, "aboutPara1")}
+            >
+              {data.page.heroSection.aboutPara1}
+            </div>
+            <div
+              className="mt-3"
+              data-tina-field={tinaField(data.page.heroSection, "aboutPara2")}
+            >
+              {data.page.heroSection.aboutPara2}
+            </div>
           </div>
         </div>
+
         <div className="w-full md:w-auto mt-6 flex flex-col md:flex-row justify-center md:justify-start gap-3 md:gap-6">
-          <a
-            href="#"
-            className="order-2 mx-auto md:mx-0 text-xs lg:text-sm xl:text-base font-semibold flex flex-row md:my-auto items-center"
-          >
-            <div>Download the 2022 program</div>
-            <div className="ml-1.5 md:ml-2 h-2.5 md:h-3 w-2.5 md:w-3 md:-mt-0.5">
-              <DynamicSvg
-                src={download_black.src}
-                color={fontColor}
-                className="w-full h-full"
-              />
-            </div>
-          </a>
+          {data.page.heroSection.downloadButton.actionButtonToggle && (
+            <a
+              href={data.page.heroSection.downloadButton.downloadButtonFile}
+              target="_blank"
+              className="order-2 mx-auto md:mx-0 text-xs lg:text-sm xl:text-base font-semibold flex flex-row md:my-auto items-center"
+            >
+              <div
+                data-tina-field={tinaField(
+                  data.page.heroSection.downloadButton,
+                  "actionButton"
+                )}
+              >
+                {data.page.heroSection.downloadButton.actionButton}
+              </div>
+              <div className="ml-1.5 md:ml-2 h-2.5 md:h-3 w-2.5 md:w-3 md:-mt-0.5">
+                <DynamicSvg
+                  src={download_black.src}
+                  color={fontColor}
+                  className="w-full h-full"
+                />
+              </div>
+            </a>
+          )}
           <ActionButton
             actionButtonToggle={
               data.page.heroSection.actionButton.actionButtonToggle
