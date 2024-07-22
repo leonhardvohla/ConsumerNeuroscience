@@ -140,85 +140,87 @@ export default function HomePage(props) {
           </div>
         </div>
       </div>
-      <div
-        className="px-16 sm:px-20 md:px-24 lg:px-32"
-        style={{ color: fontColor, backgroundColor: backgroundColor1 }}
-        id="heroSection"
-      >
+      {data.page.heroSection.heroToggle && (
         <div
-          className="md:hidden w-full h-52 sm:h-64 mt-10 sm:my-10 bg-main bg-cover bg-right rounded-md"
-          style={{
-            backgroundImage: `url(${data.page.heroSection.mainImage})`,
-          }}
-          data-tina-field={tinaField(data.page.heroSection, "mainImage")}
-        ></div>
-        <img
-          alt="main image"
-          className="hidden md:flex w-max bg-contain bg-no-repeat my-10 lg:my-12 rounded-lg"
-          data-tina-field={tinaField(data.page.heroSection, "mainImage")}
-          src={data.page.heroSection.mainImage}
-        />
-        <div className="mt-8 flex flex-col md:flex-row gap-6 md:justify-between">
+          className="px-16 sm:px-20 md:px-24 lg:px-32"
+          style={{ color: fontColor, backgroundColor: backgroundColor1 }}
+          id="heroSection"
+        >
           <div
-            className="text-2xl sm:text-3xl md:text-4xs md:w-400 leading-snug md:leading-normal text-center md:text-left"
-            data-tina-field={tinaField(data.page.heroSection, "title")}
-          >
-            <TinaMarkdown content={data.page.heroSection.title} />
-          </div>
-          <div className="font-light text-xs text-center leading-snug md:w-150 md:text-left md:text-3xs md:mt-2">
-            <div
-              data-tina-field={tinaField(data.page.heroSection, "aboutPara1")}
-            >
-              {data.page.heroSection.aboutPara1}
-            </div>
-            <div
-              className="mt-3"
-              data-tina-field={tinaField(data.page.heroSection, "aboutPara2")}
-            >
-              {data.page.heroSection.aboutPara2}
-            </div>
-          </div>
-        </div>
-
-        <div className="w-full md:w-auto mt-6 flex flex-col md:flex-row justify-center md:justify-start gap-3 md:gap-6">
-          {data.page.heroSection.downloadButton.actionButtonToggle && (
-            <a
-              href={data.page.heroSection.downloadButton.downloadButtonFile}
-              target="_blank"
-              className="order-2 mx-auto md:mx-0 text-xs lg:text-sm xl:text-base font-semibold flex flex-row md:my-auto items-center"
-            >
-              <div
-                data-tina-field={tinaField(
-                  data.page.heroSection.downloadButton,
-                  "actionButton"
-                )}
-              >
-                {data.page.heroSection.downloadButton.actionButton}
-              </div>
-              <div className="ml-1.5 md:ml-2 h-2.5 md:h-3 w-2.5 md:w-3 md:-mt-0.5">
-                <DynamicSvg
-                  src={download_black.src}
-                  color={fontColor}
-                  className="w-full h-full"
-                />
-              </div>
-            </a>
-          )}
-          <ActionButton
-            actionButtonToggle={
-              data.page.heroSection.actionButton.actionButtonToggle
-            }
-            actionButtonLink={
-              data.page.heroSection.actionButton.actionButtonLink
-            }
-            actionButtonText={data.page.heroSection.actionButton.actionButton}
-            fontColor={fontColor}
-            hoverColor={hoverColor}
-            tinaField={tinaField(data.page.heroSection, "actionButton")}
-            additionalClasses="order-1 mx-auto md:mx-0 text-xs lg:text-sm xl:text-base my-auto "
+            className="md:hidden w-full h-52 sm:h-64 mt-10 sm:my-10 bg-main bg-cover bg-right rounded-md"
+            style={{
+              backgroundImage: `url(${data.page.heroSection.mainImage})`,
+            }}
+            data-tina-field={tinaField(data.page.heroSection, "mainImage")}
+          ></div>
+          <img
+            alt="main image"
+            className="hidden md:flex w-max bg-contain bg-no-repeat my-10 lg:my-12 rounded-lg"
+            data-tina-field={tinaField(data.page.heroSection, "mainImage")}
+            src={data.page.heroSection.mainImage}
           />
+          <div className="mt-8 flex flex-col md:flex-row gap-6 md:justify-between">
+            <div
+              className="text-2xl sm:text-3xl md:text-4xs md:w-400 leading-snug md:leading-normal text-center md:text-left"
+              data-tina-field={tinaField(data.page.heroSection, "title")}
+            >
+              <TinaMarkdown content={data.page.heroSection.title} />
+            </div>
+            <div className="font-light text-xs text-center leading-snug md:w-150 md:text-left md:text-3xs md:mt-2">
+              <div
+                data-tina-field={tinaField(data.page.heroSection, "aboutPara1")}
+              >
+                {data.page.heroSection.aboutPara1}
+              </div>
+              <div
+                className="mt-3"
+                data-tina-field={tinaField(data.page.heroSection, "aboutPara2")}
+              >
+                {data.page.heroSection.aboutPara2}
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full md:w-auto mt-6 flex flex-col md:flex-row justify-center md:justify-start gap-3 md:gap-6">
+            {data.page.heroSection.downloadButton.actionButtonToggle && (
+              <a
+                href={data.page.heroSection.downloadButton.downloadButtonFile}
+                target="_blank"
+                className="order-2 mx-auto md:mx-0 text-xs lg:text-sm xl:text-base font-semibold flex flex-row md:my-auto items-center"
+              >
+                <div
+                  data-tina-field={tinaField(
+                    data.page.heroSection.downloadButton,
+                    "actionButton"
+                  )}
+                >
+                  {data.page.heroSection.downloadButton.actionButton}
+                </div>
+                <div className="ml-1.5 md:ml-2 h-2.5 md:h-3 w-2.5 md:w-3 md:-mt-0.5">
+                  <DynamicSvg
+                    src={download_black.src}
+                    color={fontColor}
+                    className="w-full h-full"
+                  />
+                </div>
+              </a>
+            )}
+            <ActionButton
+              actionButtonToggle={
+                data.page.heroSection.actionButton.actionButtonToggle
+              }
+              actionButtonLink={
+                data.page.heroSection.actionButton.actionButtonLink
+              }
+              actionButtonText={data.page.heroSection.actionButton.actionButton}
+              fontColor={fontColor}
+              hoverColor={hoverColor}
+              tinaField={tinaField(data.page.heroSection, "actionButton")}
+              additionalClasses="order-1 mx-auto md:mx-0 text-xs lg:text-sm xl:text-base my-auto "
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
