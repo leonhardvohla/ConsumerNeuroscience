@@ -291,10 +291,15 @@ export default function HomePage(props) {
             }}
           >
             {data.page.researchSection.researchItems.map((item, index) => {
-              console.log("Current fontColor:", fontColor);
               return (
                 <div className="flex flex-col md:flex-row justify-center mt-8 gap-4">
-                  <div className="p-4.5 flex flex-col bg-white shadow-2xl shadow-stone-200/50 border border-slate-100 rounded-lg h-full">
+                  <div
+                    className="p-4.5 flex flex-col shadow-2xl shadow-stone-200/50 border rounded-lg h-full"
+                    style={{
+                      backgroundColor: backgroundColor1,
+                      borderColor: backgroundColor3,
+                    }}
+                  >
                     <div
                       className="text-sm font-semibold leading-4.5"
                       data-tina-field={tinaField(item, "title")}
