@@ -2,6 +2,7 @@ import { tinaField, useTina } from "tinacms/dist/react";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { client } from "../tina/__generated__/client";
 import { ReactSVG } from "react-svg";
+import { useState, useEffect } from "react";
 
 import menu from "../public/icons/menu.svg";
 import download from "../public/icons/download.svg";
@@ -63,23 +64,38 @@ export default function HomePage(props) {
     );
   };
 
-  const DynamicSvg = ({ src, color, className }) => {
-    return (
-      <ReactSVG
-        src={src}
-        beforeInjection={(svg) => {
-          svg.querySelectorAll("*").forEach((el) => {
-            if (el.getAttribute("stroke")) {
-              el.setAttribute("stroke", color);
-            }
-            if (el.getAttribute("fill") && el.getAttribute("fill") !== "none") {
-              el.setAttribute("fill", color);
-            }
+  const DynamicSvg = ({ src, color, className, key = undefined }) => {
+    const [svgContent, setSvgContent] = useState(null);
+
+    useEffect(() => {
+      fetch(src)
+        .then((response) => response.text())
+        .then((text) => {
+          const parser = new DOMParser();
+          const svgDoc = parser.parseFromString(text, "image/svg+xml");
+          const svgElement = svgDoc.documentElement;
+
+          // Set the fill color on the SVG element itself
+          svgElement.setAttribute("fill", color);
+
+          // Remove any hardcoded colors from child elements
+          svgElement.querySelectorAll("*").forEach((el) => {
+            el.removeAttribute("fill");
+            el.removeAttribute("stroke");
           });
-          svg.setAttribute("width", "100%");
-          svg.setAttribute("height", "100%");
-        }}
+
+          setSvgContent(svgElement.outerHTML);
+        });
+    }, [src, color]);
+
+    if (!svgContent) {
+      return null;
+    }
+
+    return (
+      <div
         className={className}
+        dangerouslySetInnerHTML={{ __html: svgContent }}
       />
     );
   };
@@ -269,64 +285,71 @@ export default function HomePage(props) {
               gridAutoRows: "auto",
             }}
           >
-            {data.page.researchSection.researchItems.map((item, index) => (
-              <div class="flex flex-col md:flex-row justify-center mt-8 gap-4">
-                <div class="p-4.5 flex flex-col bg-white shadow-2xl shadow-stone-200/50 border border-slate-100 rounded-lg h-full">
-                  <div
-                    class="text-sm font-semibold leading-4.5"
-                    data-tina-field={tinaField(item, "title")}
-                  >
-                    {item.title}
-                  </div>
-                  <div
-                    class="pt-1.5 text-xs font-extralight mt-0 mb-3"
-                    data-tina-field={tinaField(item, "authors")}
-                  >
-                    {item.authors}
-                  </div>
-                  <div class="flex flex-row mt-auto justify-self-end">
-                    <a
-                      href={item.link}
-                      data-tina-field={tinaField(item, "link")}
-                      class="flex flex-row bg-slate-100 rounded-lg h-12 px-3 flex-1"
+            {data.page.researchSection.researchItems.map((item) => {
+              console.log("Current fontColor:", fontColor);
+              return (
+                <div class="flex flex-col md:flex-row justify-center mt-8 gap-4">
+                  <div class="p-4.5 flex flex-col bg-white shadow-2xl shadow-stone-200/50 border border-slate-100 rounded-lg h-full">
+                    <div
+                      class="text-sm font-semibold leading-4.5"
+                      data-tina-field={tinaField(item, "title")}
                     >
-                      <img
-                        alt="link icon"
-                        class="h-4 mr-1 my-auto -rotate-45"
-                        src={link.src}
-                      />
-                      <div class="text-xs my-auto">{item.journal}</div>
-                    </a>
-                    <a
-                      href={item.pdf || "#"}
-                      target="_blank"
-                      data-tina-field={tinaField(item, "pdf")}
-                      className={`flex flex-row rounded-lg h-12 w-12 bg-slate-300 ml-3 ${
-                        item.pdf ? "cursor-pointer" : "cursor-default"
-                      }`}
-                      style={{
-                        backgroundColor: item.pdf
-                          ? highlightColor
-                          : unactivatedColor,
-                      }}
-                      onClick={(e) => {
-                        if (!item.pdf) {
-                          e.preventDefault();
-                        }
-                      }}
+                      {item.title}
+                    </div>
+                    <div
+                      class="pt-1.5 text-xs font-extralight mt-0 mb-3"
+                      data-tina-field={tinaField(item, "authors")}
                     >
-                      <img
-                        alt="download icon"
-                        class={`h-5 mx-auto my-auto ${
-                          item.pdf ? "" : "opacity-50"
+                      {item.authors}
+                    </div>
+                    <div class="flex flex-row mt-auto justify-self-end">
+                      <a
+                        href={item.link}
+                        data-tina-field={tinaField(item, "link")}
+                        class="flex flex-row bg-slate-100 rounded-lg h-12 px-3 flex-1"
+                      >
+                        <div className="w-5 h-5 mr-1 my-auto -rotate-45">
+                          <DynamicSvg
+                            src={link.src}
+                            color={fontColor}
+                            className="w-full h-full"
+                            key={fontColor}
+                          />
+                        </div>
+                        <div class="text-xs my-auto">{item.journal}</div>
+                      </a>
+
+                      <a
+                        href={item.pdf || "#"}
+                        target="_blank"
+                        data-tina-field={tinaField(item, "pdf")}
+                        className={`flex flex-row rounded-lg h-12 w-12 bg-slate-300 ml-3 ${
+                          item.pdf ? "cursor-pointer" : "cursor-default"
                         }`}
-                        src={download.src}
-                      />
-                    </a>
+                        style={{
+                          backgroundColor: item.pdf
+                            ? highlightColor
+                            : unactivatedColor,
+                        }}
+                        onClick={(e) => {
+                          if (!item.pdf) {
+                            e.preventDefault();
+                          }
+                        }}
+                      >
+                        <img
+                          alt="download icon"
+                          class={`h-5 mx-auto my-auto ${
+                            item.pdf ? "" : "opacity-50"
+                          }`}
+                          src={download.src}
+                        />
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
           <div className="w-full mt-6 flex flex-col justify-center md:hidden">
             <a
