@@ -512,6 +512,18 @@ export default {
           },
         },
         {
+          name: "hoverColor",
+          label: "Hover Color",
+          type: "string",
+          description:
+            "Choose a color for the text inside the buttons when hovered, normally black or white",
+          ui: {
+            component: "color",
+            colorFormat: "hex",
+            widget: "sketch",
+          },
+        },
+        {
           name: "backgroundColor1",
           label: "Background Color 1",
           type: "string",
@@ -553,18 +565,6 @@ export default {
           type: "string",
           description:
             "Choose a color for the highlight (this is the color used for some buttons)",
-          ui: {
-            component: "color",
-            colorFormat: "hex",
-            widget: "sketch",
-          },
-        },
-        {
-          name: "buttonColor",
-          label: "Button Color",
-          type: "string",
-          description:
-            "Choose a color for the buttons (this is the color used for the buttons, the border, the text, and the hover color)",
           ui: {
             component: "color",
             colorFormat: "hex",

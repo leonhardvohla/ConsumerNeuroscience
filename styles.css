@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+a:hover {
+    background-color: var(--button-color);
+}
