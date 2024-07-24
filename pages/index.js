@@ -2,7 +2,7 @@ import { tinaField, useTina } from "tinacms/dist/react";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { client } from "../tina/__generated__/client";
 import { ReactSVG } from "react-svg";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import menu from "../public/icons/menu.svg";
 import download from "../public/icons/download.svg";
@@ -26,6 +26,47 @@ export default function HomePage(props) {
   const unactivatedHighlightTextColor =
     data.page.themeSection.unactivatedHighlightTextColor;
   const highlightTextColor = data.page.themeSection.highlightTextColor;
+
+  // Add these at the top of your component function:
+  const [isExpanded, setIsExpanded] = useState(false);
+  const expandedRef = useRef(null);
+
+  // Add this useEffect hook in your component:
+  useEffect(() => {
+    const adjustHeight = () => {
+      if (expandedRef.current) {
+        const expanded = expandedRef.current;
+        const containerWidth = expanded.offsetWidth;
+        const boxWidth = 250;
+        const gap = 16;
+        const boxesPerRow = Math.floor(
+          (containerWidth + gap) / (boxWidth + gap)
+        );
+
+        let firstRowHeight = 0;
+        const children = expanded.children;
+        for (let i = 0; i < Math.min(boxesPerRow, children.length); i++) {
+          const childHeight = children[i].offsetHeight;
+          const computedStyle = window.getComputedStyle(children[i]);
+          const verticalMargin =
+            parseFloat(computedStyle.marginTop) +
+            parseFloat(computedStyle.marginBottom);
+          firstRowHeight = Math.max(
+            firstRowHeight,
+            childHeight + verticalMargin
+          );
+        }
+
+        expanded.style.maxHeight = isExpanded
+          ? `${expanded.scrollHeight}px`
+          : `${firstRowHeight}px`;
+      }
+    };
+
+    adjustHeight();
+    window.addEventListener("resize", adjustHeight);
+    return () => window.removeEventListener("resize", adjustHeight);
+  }, [isExpanded]);
 
   const ActionButton = ({
     actionButtonToggle,
@@ -249,6 +290,7 @@ export default function HomePage(props) {
           </div>
         </div>
       )}
+
       {data.page.researchSection.researchToggle && (
         <div
           className="px-16 sm:px-20 md:px-24 lg:px-32 mt-12 md:mt-14 xl:mt-18 py-10"
@@ -259,10 +301,8 @@ export default function HomePage(props) {
             <div className="text-2xl lg:text-3xl xl:text-4xl text-center md:text-left">
               Recent Research
             </div>
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
               className={`hidden md:flex actionButton group text-xs lg:text-sm xl:text-base my-auto border px-4 py-2 rounded-full font-semibold transition-colors duration-300 ease-in-out relative overflow-hidden mr-0 mt-2.5`}
               style={{
                 borderColor: fontColor,
@@ -272,19 +312,20 @@ export default function HomePage(props) {
               }}
             >
               <span className="relative z-10 transition-colors duration-300 ease-in-out group-hover:text-transparent">
-                See all research +
+                {isExpanded ? "See less -" : "See all research +"}
               </span>
               <span
                 className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
                 style={{ color: hoverColor }}
               >
-                See all research +
+                {isExpanded ? "See less -" : "See all research +"}
               </span>
-            </a>
+            </button>
           </div>
           <hr className="w-auto my-4 bg-stone-500 md:my-6 xl:mb-10" />
           <div
-            className="grid gap-4"
+            ref={expandedRef}
+            className="grid gap-4 transition-[max-height] duration-500 ease-in-out overflow-hidden"
             style={{
               gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
               gridAutoRows: "auto",
@@ -292,7 +333,10 @@ export default function HomePage(props) {
           >
             {data.page.researchSection.researchItems.map((item, index) => {
               return (
-                <div className="flex flex-col md:flex-row justify-center mt-8 gap-4">
+                <div
+                  key={index}
+                  className="flex flex-col md:flex-row justify-center mt-8 gap-4"
+                >
                   <div
                     className="p-4.5 flex flex-col shadow-2xl shadow-stone-200/50 border rounded-lg h-full"
                     style={{
@@ -330,7 +374,6 @@ export default function HomePage(props) {
                         </div>
                         <div className="text-xs my-auto">{item.journal}</div>
                       </a>
-
                       <a
                         href={item.pdf || "#"}
                         target="_blank"
@@ -368,11 +411,13 @@ export default function HomePage(props) {
               );
             })}
           </div>
-          <div className="w-full mt-6 flex flex-col justify-center md:hidden">
-            <a
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
+          <div
+            className={`w-full mt-6 flex flex-col justify-center ${
+              isExpanded ? "" : "md:hidden"
+            }`}
+          >
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
               className={`actionButton group text-xs lg:text-sm xl:text-base my-auto border px-4 py-2 rounded-full font-semibold transition-colors duration-300 ease-in-out relative overflow-hidden mx-auto mt-2.5`}
               style={{
                 borderColor: fontColor,
@@ -382,15 +427,15 @@ export default function HomePage(props) {
               }}
             >
               <span className="relative z-10 transition-colors duration-300 ease-in-out group-hover:text-transparent">
-                See all research +
+                {isExpanded ? "See less -" : "See all research +"}
               </span>
               <span
                 className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
                 style={{ color: hoverColor }}
               >
-                See all research +
+                {isExpanded ? "See less -" : "See all research +"}
               </span>
-            </a>
+            </button>
           </div>
         </div>
       )}
