@@ -1,13 +1,11 @@
 import { tinaField, useTina } from "tinacms/dist/react";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { client } from "../tina/__generated__/client";
-import { ReactSVG } from "react-svg";
 import React, { useState, useEffect, useRef } from "react";
 
 import menu from "../public/icons/menu.svg";
 import download from "../public/icons/download.svg";
 import link from "../public/icons/link.svg";
-import { da } from "date-fns/locale";
 
 export default function HomePage(props) {
   const { data } = useTina({
@@ -151,12 +149,10 @@ export default function HomePage(props) {
         backgroundColor: backgroundColor1,
       }}
     >
-      <div className="fixed top-0 left-0 w-12 h-12 bg-blue-400 sm:bg-green-300 md:bg-yellow-400 lg:bg-red-300 xl:bg-purple-300">
-        hi
-      </div>
+      <div className="fixed top-0 left-0 w-12 h-12 bg-blue-400 sm:bg-green-300 md:bg-yellow-400 lg:bg-red-300 xl:bg-purple-300"></div>
 
       <div
-        className="px-16 sm:px-20 md:px-24 lg:px-32 pt-14"
+        className="px-10 sm:px-20 md:px-24 lg:px-32 pt-14"
         style={{ color: fontColor, backgroundColor: backgroundColor1 }}
         id="headerSection"
       >
@@ -210,7 +206,7 @@ export default function HomePage(props) {
       </div>
       {data.page.heroSection.heroToggle && (
         <div
-          className="px-16 sm:px-20 md:px-24 lg:px-32"
+          className="px-10 sm:px-20 md:px-24 lg:px-32"
           style={{ color: fontColor, backgroundColor: backgroundColor1 }}
           id="heroSection"
         >
@@ -293,7 +289,7 @@ export default function HomePage(props) {
 
       {data.page.researchSection.researchToggle && (
         <div
-          className="px-16 sm:px-20 md:px-24 lg:px-32 mt-12 md:mt-14 xl:mt-18 py-10"
+          className="px-10 sm:px-20 md:px-24 lg:px-32 mt-12 md:mt-14 xl:mt-18 py-10"
           style={{ color: fontColor, backgroundColor: backgroundColor2 }}
           id="researchSection"
         >
@@ -310,6 +306,7 @@ export default function HomePage(props) {
                 "--button-color": fontColor,
                 "--hover-color": hoverColor,
               }}
+              href="#researchSection"
             >
               <span className="relative z-10 transition-colors duration-300 ease-in-out group-hover:text-transparent">
                 {isExpanded ? "See less -" : "See all research +"}
@@ -327,7 +324,8 @@ export default function HomePage(props) {
             ref={expandedRef}
             className="grid gap-4 transition-[max-height] duration-500 ease-in-out overflow-hidden"
             style={{
-              gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+              gridTemplateColumns:
+                "repeat(auto-fill, minmax(min(100%, 250px), 1fr))",
               gridAutoRows: "auto",
             }}
           >
@@ -372,7 +370,9 @@ export default function HomePage(props) {
                             key={index}
                           />
                         </div>
-                        <div className="text-xs my-auto">{item.journal}</div>
+                        <div className="text-xs my-auto line-clamp-2">
+                          {item.journal}
+                        </div>
                       </a>
                       <a
                         href={item.pdf || "#"}
@@ -439,6 +439,58 @@ export default function HomePage(props) {
           </div>
         </div>
       )}
+      <div className="flex flex-col lg:flex-row lg:mx-32 lg:gap-10 lg:justify-between my-14">
+        <div className="flex flex-col mx-16 sm:mx-20 md:mx-24 lg:mx-0">
+          <div className="flex flex-col md:flex-row justify-between">
+            <img
+              alt="sponsor logo"
+              className="w-max md:w-auto h-auto sm:w-64 md:h-40 lg:h-50 mx-auto my-auto rounded-lg"
+              src={data.page.aboutSection.sponsor.sponsorImage}
+            />
+            <div className="flex flex-col md:ml-10 lg:mr-10">
+              <div className="text-2xl md:text-xl xl:text-2xl font-bold text-center md:text-left mt-5 md:mt-0">
+                Official Sponsor
+              </div>
+              <div className="text-lg md:text-base xl:text-lg font-semibold text-center md:text-left leading-5 my-3 md:mt-2 md:mb-0">
+                The Association For Consumer Research
+              </div>
+              <div className="text-base md:text-sm xl:text-base font-light text-center md:text-left">
+                The mission of the Association for Consumer Research (ACR) is to
+                advance consumer research and facilitate the exchange of
+                scholarly information among members of academia, industry, and
+                government worldwide.
+              </div>
+              <a
+                href="#"
+                className="text-base md:text-sm xl:text-base font-semibold text-center mt-3 md:text-left"
+              >
+                Find out more
+              </a>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col md:flex-row lg:flex-col md:mx-24 lg:mx-0 md:justify-between xl:justify-start md:mt-10 lg:mt-0 lg:w-96 xl:w-200">
+          <div className="text-2xl md:text-xl xl:text-2xl font-bold text-center mt-8 mb-1 md:my-auto ">
+            Workshop Facilitators
+          </div>
+          <div>
+            <div className="text-lg md:text-base xl:text-lg font-semibold text-center leading-5 my-2 md:mt-0 xl:mb-0">
+              Bill Hedgcock
+            </div>
+            <div className="text-md md:text-sm xl:text-md font-light text-center mb-4 md:mb-0 xl:mb-2">
+              University of Minnesota
+            </div>
+          </div>
+          <div>
+            <div className="text-lg md:text-base xl:text-lg font-semibold text-center leading-5 my-2 md:mt-0 xl:mb-0">
+              Martin Reimann
+            </div>
+            <div className="text-md md:text-sm xl:text-md font-light text-center xl:mb-2">
+              University of Arizona
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -156,18 +156,18 @@ export default {
           type: "boolean",
           description: "Toggle the display of the section",
         },
-        {
-          name: "researchSort",
-          label: "Sort Research",
-          type: "string",
-          description: "Sort the research by date, title, or manually",
-          options: [
-            "Date (most recent first)",
-            "Title (A-Z)",
-            "Author (A-Z)",
-            "Manual",
-          ],
-        },
+        // {
+        //   name: "researchSort",
+        //   label: "Sort Research",
+        //   type: "string",
+        //   description: "Sort the research by date, title, or manually",
+        //   options: [
+        //     "Date (most recent first)",
+        //     "Title (A-Z)",
+        //     "Author (A-Z)",
+        //     "Manual",
+        //   ],
+        // },
         {
           name: "researchItems",
           label: "Research Papers",

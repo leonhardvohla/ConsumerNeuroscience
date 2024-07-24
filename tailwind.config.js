@@ -33,6 +33,7 @@ module.exports = {
         25: "25deg",
       },
       spacing: {
+        100: "61vw",
         150: "29vw",
         400: "42vw",
         200: "40rem",
