@@ -480,6 +480,8 @@ export default function HomePage(props) {
                 {data.page.aboutSection.sponsor.sponsorLinkDisplayText && (
                   <a
                     href={data.page.aboutSection.sponsor.sponsorLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-base md:text-sm xl:text-base font-semibold text-center mt-3 md:text-left"
                     data-tina-field={tinaField(
                       data.page.aboutSection.sponsor,
