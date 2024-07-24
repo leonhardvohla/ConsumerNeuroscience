@@ -252,12 +252,6 @@ export default {
           type: "object",
           fields: [
             {
-              name: "sponsorToggle",
-              label: "Display Sponsor",
-              type: "boolean",
-              description: "Toggle the display of the sponsor",
-            },
-            {
               name: "sponsorImage",
               label: "Sponsor Image",
               type: "image",
@@ -285,8 +279,7 @@ export default {
               name: "sponsorLinkDisplayText",
               label: "Sponsor Link Display Text",
               type: "string",
-              description:
-                "The text for the link (defaults to 'Find out more' if empty)",
+              description: "The text for the link",
             },
           ],
         },
@@ -295,31 +288,30 @@ export default {
           label: "Workshop Facilitators",
           type: "object",
           description: "The list of workshop facilitators",
-          list: true,
-          defaultItem: () => {
-            return {
-              name: "New Facilitator",
-              university: "University Name",
-            };
-          },
-          ui: {
-            itemProps: (item) => ({
-              label: item?.name || "Untitled Paper",
-            }),
-          },
           fields: [
             {
-              name: "name",
-              label: "Name",
+              name: "name1",
+              label: "Name 1",
               type: "string",
-              description: "The name for the workshop facilitator",
-              required: true,
+              description: "The name for the first workshop facilitator",
             },
             {
-              name: "university",
-              label: "University",
+              name: "university1",
+              label: "University 1",
               type: "string",
-              description: "The university for the workshop facilitator",
+              description: "The university for the first workshop facilitator",
+            },
+            {
+              name: "name2",
+              label: "Name 2",
+              type: "string",
+              description: "The name for the second workshop facilitator",
+            },
+            {
+              name: "university2",
+              label: "University 2",
+              type: "string",
+              description: "The university for the second workshop facilitator",
             },
           ],
         },

@@ -439,58 +439,106 @@ export default function HomePage(props) {
           </div>
         </div>
       )}
-      <div className="flex flex-col lg:flex-row lg:mx-32 lg:gap-10 lg:justify-between my-14">
-        <div className="flex flex-col mx-16 sm:mx-20 md:mx-24 lg:mx-0">
-          <div className="flex flex-col md:flex-row justify-between">
-            <img
-              alt="sponsor logo"
-              className="w-max md:w-auto h-auto sm:w-64 md:h-40 lg:h-50 mx-auto my-auto rounded-lg"
-              src={data.page.aboutSection.sponsor.sponsorImage}
-            />
-            <div className="flex flex-col md:ml-10 lg:mr-10">
-              <div className="text-2xl md:text-xl xl:text-2xl font-bold text-center md:text-left mt-5 md:mt-0">
-                Official Sponsor
+      {data.page.aboutSection.aboutToggle && (
+        <div
+          className="flex flex-col lg:flex-row lg:mx-32 lg:gap-10 lg:justify-between my-14"
+          id="aboutSection"
+        >
+          <div className="flex flex-col mx-16 sm:mx-20 md:mx-24 lg:mx-0">
+            <div className="flex flex-col md:flex-row justify-between">
+              <img
+                alt="sponsor logo"
+                className="w-max md:w-auto h-auto sm:w-64 md:h-40 lg:h-50 mx-auto my-auto rounded-lg"
+                data-tina-field={tinaField(
+                  data.page.aboutSection.sponsor,
+                  "sponsorImage"
+                )}
+                src={data.page.aboutSection.sponsor.sponsorImage}
+              />
+              <div className="flex flex-col md:ml-10 lg:mr-10">
+                <div className="text-2xl md:text-xl xl:text-2xl font-bold text-center md:text-left mt-5 md:mt-0">
+                  Official Sponsor
+                </div>
+                <div
+                  className="text-lg md:text-base xl:text-lg font-semibold text-center md:text-left leading-5 my-3 md:mt-2 md:mb-0"
+                  data-tina-field={tinaField(
+                    data.page.aboutSection.sponsor,
+                    "sponsorName"
+                  )}
+                >
+                  {data.page.aboutSection.sponsor.sponsorName}
+                </div>
+                <div
+                  className="text-base md:text-sm xl:text-base font-light text-center md:text-left"
+                  data-tina-field={tinaField(
+                    data.page.aboutSection.sponsor,
+                    "sponsorDescription"
+                  )}
+                >
+                  {data.page.aboutSection.sponsor.sponsorDescription}
+                </div>
+                {data.page.aboutSection.sponsor.sponsorLinkDisplayText && (
+                  <a
+                    href={data.page.aboutSection.sponsor.sponsorLink}
+                    className="text-base md:text-sm xl:text-base font-semibold text-center mt-3 md:text-left"
+                    data-tina-field={tinaField(
+                      data.page.aboutSection.sponsor,
+                      "sponsorLinkDisplayText"
+                    )}
+                  >
+                    {data.page.aboutSection.sponsor.sponsorLinkDisplayText}
+                  </a>
+                )}
               </div>
-              <div className="text-lg md:text-base xl:text-lg font-semibold text-center md:text-left leading-5 my-3 md:mt-2 md:mb-0">
-                The Association For Consumer Research
-              </div>
-              <div className="text-base md:text-sm xl:text-base font-light text-center md:text-left">
-                The mission of the Association for Consumer Research (ACR) is to
-                advance consumer research and facilitate the exchange of
-                scholarly information among members of academia, industry, and
-                government worldwide.
-              </div>
-              <a
-                href="#"
-                className="text-base md:text-sm xl:text-base font-semibold text-center mt-3 md:text-left"
+            </div>
+          </div>
+          <div className="flex flex-col md:flex-row lg:flex-col md:mx-24 lg:mx-0 md:justify-between xl:justify-start md:mt-10 lg:mt-0 lg:w-96 xl:w-200">
+            <div className="text-2xl md:text-xl xl:text-2xl font-bold text-center mt-8 mb-1 md:my-auto ">
+              Workshop Facilitators
+            </div>
+            <div>
+              <div
+                className="text-lg md:text-base xl:text-lg font-semibold text-center leading-5 my-2 md:mt-0 xl:mb-0"
+                data-tina-field={tinaField(
+                  data.page.aboutSection.workshopFacilitators,
+                  "name1"
+                )}
               >
-                Find out more
-              </a>
+                {data.page.aboutSection.workshopFacilitators.name1}
+              </div>
+              <div
+                className="text-md md:text-sm xl:text-md font-light text-center mb-4 md:mb-0 xl:mb-2"
+                data-tina-field={tinaField(
+                  data.page.aboutSection.workshopFacilitators,
+                  "university1"
+                )}
+              >
+                {data.page.aboutSection.workshopFacilitators.university1}
+              </div>
+            </div>
+            <div>
+              <div
+                className="text-lg md:text-base xl:text-lg font-semibold text-center leading-5 my-2 md:mt-0 xl:mb-0"
+                data-tina-field={tinaField(
+                  data.page.aboutSection.workshopFacilitators,
+                  "name2"
+                )}
+              >
+                {data.page.aboutSection.workshopFacilitators.name2}
+              </div>
+              <div
+                className="text-md md:text-sm xl:text-md font-light text-center xl:mb-2"
+                data-tina-field={tinaField(
+                  data.page.aboutSection.workshopFacilitators,
+                  "university2"
+                )}
+              >
+                {data.page.aboutSection.workshopFacilitators.university2}
+              </div>
             </div>
           </div>
         </div>
-        <div className="flex flex-col md:flex-row lg:flex-col md:mx-24 lg:mx-0 md:justify-between xl:justify-start md:mt-10 lg:mt-0 lg:w-96 xl:w-200">
-          <div className="text-2xl md:text-xl xl:text-2xl font-bold text-center mt-8 mb-1 md:my-auto ">
-            Workshop Facilitators
-          </div>
-          <div>
-            <div className="text-lg md:text-base xl:text-lg font-semibold text-center leading-5 my-2 md:mt-0 xl:mb-0">
-              Bill Hedgcock
-            </div>
-            <div className="text-md md:text-sm xl:text-md font-light text-center mb-4 md:mb-0 xl:mb-2">
-              University of Minnesota
-            </div>
-          </div>
-          <div>
-            <div className="text-lg md:text-base xl:text-lg font-semibold text-center leading-5 my-2 md:mt-0 xl:mb-0">
-              Martin Reimann
-            </div>
-            <div className="text-md md:text-sm xl:text-md font-light text-center xl:mb-2">
-              University of Arizona
-            </div>
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
