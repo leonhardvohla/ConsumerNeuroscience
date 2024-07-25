@@ -441,8 +441,9 @@ export default function HomePage(props) {
       )}
       {data.page.aboutSection.aboutToggle && (
         <div
-          className="flex flex-col lg:flex-row lg:mx-32 lg:gap-10 lg:justify-between my-14"
+          className="flex flex-col lg:flex-row lg:mx-32 lg:gap-10 lg:justify-between py-14"
           id="aboutSection"
+          style={{ color: fontColor, backgroundColor: backgroundColor1 }}
         >
           <div className="flex flex-col mx-16 sm:mx-20 md:mx-24 lg:mx-0">
             <div className="flex flex-col md:flex-row justify-between">
@@ -456,7 +457,10 @@ export default function HomePage(props) {
                 src={data.page.aboutSection.sponsor.sponsorImage}
               />
               <div className="flex flex-col md:ml-10 lg:mr-10">
-                <div className="text-2xl md:text-xl xl:text-2xl font-bold text-center md:text-left mt-5 md:mt-0">
+                <div
+                  className="text-2xl md:text-xl xl:text-2xl font-bold text-center md:text-left mt-5 md:mt-0"
+                  style={{ color: fontColor }}
+                >
                   Official Sponsor
                 </div>
                 <div
@@ -465,6 +469,7 @@ export default function HomePage(props) {
                     data.page.aboutSection.sponsor,
                     "sponsorName"
                   )}
+                  style={{ color: fontColor }}
                 >
                   {data.page.aboutSection.sponsor.sponsorName}
                 </div>
@@ -474,6 +479,7 @@ export default function HomePage(props) {
                     data.page.aboutSection.sponsor,
                     "sponsorDescription"
                   )}
+                  style={{ color: fontColor }}
                 >
                   {data.page.aboutSection.sponsor.sponsorDescription}
                 </div>
@@ -487,6 +493,7 @@ export default function HomePage(props) {
                       data.page.aboutSection.sponsor,
                       "sponsorLinkDisplayText"
                     )}
+                    style={{ color: fontColor }}
                   >
                     {data.page.aboutSection.sponsor.sponsorLinkDisplayText}
                   </a>
@@ -495,7 +502,10 @@ export default function HomePage(props) {
             </div>
           </div>
           <div className="flex flex-col md:flex-row lg:flex-col md:mx-24 lg:mx-0 md:justify-between xl:justify-start md:mt-10 lg:mt-0 lg:w-96 xl:w-200">
-            <div className="text-2xl md:text-xl xl:text-2xl font-bold text-center mt-8 mb-1 md:my-auto ">
+            <div
+              className="text-2xl md:text-xl xl:text-2xl font-bold text-center mt-8 mb-1 md:my-auto"
+              style={{ color: fontColor }}
+            >
               Workshop Facilitators
             </div>
             <div>
@@ -505,6 +515,7 @@ export default function HomePage(props) {
                   data.page.aboutSection.workshopFacilitators,
                   "name1"
                 )}
+                style={{ color: fontColor }}
               >
                 {data.page.aboutSection.workshopFacilitators.name1}
               </div>
@@ -514,6 +525,7 @@ export default function HomePage(props) {
                   data.page.aboutSection.workshopFacilitators,
                   "university1"
                 )}
+                style={{ color: fontColor }}
               >
                 {data.page.aboutSection.workshopFacilitators.university1}
               </div>
@@ -525,6 +537,7 @@ export default function HomePage(props) {
                   data.page.aboutSection.workshopFacilitators,
                   "name2"
                 )}
+                style={{ color: fontColor }}
               >
                 {data.page.aboutSection.workshopFacilitators.name2}
               </div>
@@ -534,6 +547,7 @@ export default function HomePage(props) {
                   data.page.aboutSection.workshopFacilitators,
                   "university2"
                 )}
+                style={{ color: fontColor }}
               >
                 {data.page.aboutSection.workshopFacilitators.university2}
               </div>
