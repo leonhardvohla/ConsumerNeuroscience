@@ -616,20 +616,7 @@ export default function HomePage(props) {
                 }
               })}
             </div>
-            {/* <div className="rounded-full bg-pink-600 text-white px-4 py-1.5 font-semibold">
-              2021
-            </div>
-            <div className="rounded-full px-4 py-1.5 font-semibold text-stone-600">
-              2018
-            </div>
-            <div className="rounded-full px-4 py-1.5 font-semibold text-stone-600">
-              2017
-            </div>
-            <div className="rounded-full px-4 py-1.5 font-semibold text-stone-600">
-              2016
-            </div> */}
           </div>
-          {/* find the workshop matching selectedWorkshop and return a div containing its data (or display nothing if selectedWorkshop is null) */}
           {data.page.workshopsSection.workshops.map((item, index) => {
             if (item.title === selectedWorkshop) {
               return (
@@ -678,74 +665,6 @@ export default function HomePage(props) {
               );
             }
           })}
-          {/* <div className="text-xl font-semibold text-center md:text-left mt-6 mb-1">
-            Conceptual, Methodological, and Substantive Opportunities for
-            Collaboration at the Interface of Consumer Research and Functional
-            Neuroimaging
-          </div>
-          <div className="flex flex-col">
-            <div className="text-sm font-light text-center mt-6 md:my-4 md:text-left">
-              The First Workshop on Consumer Neuroscience was a Pre-Conference
-              Workshop of the 2016 Association for Consumer Research Annual
-              Conference. It was hosted at the Bauhaus Archive in Berlin,
-              Germany on Thursday, October 27, 2016. During the pre-conference
-              workshop, three “design thinking challenges” were offered and
-              participants rotated between three tables and generated ideas.
-              “Design thinking” is a method for solution-focused thinking and
-              employs prototyping and social inspiration for creative problem
-              resolution and was applied to conceptual, methodological, and
-              substantive issues concerning consumer neuroscience. Two keynote
-              speakers, Bernd Weber and Michael Schaefer, inspired participants
-              with new ideas for collaboration.
-            </div>
-            <img
-              alt="image1"
-              className="w-full mt-6 rounded-md"
-              src={data.page.workshopsSection.workshops[0].poster}
-            />
-            <div className="flex flex-col md:flex-row md:gap-4">
-              <div className="justify-between flex flex-row mt-4 gap-4 md:w-full">
-                <div className="w-full aspect-square">
-                  <img
-                    alt="image1"
-                    className="w-full rounded-md"
-                    src={
-                      data.page.workshopsSection.workshops[0].images[0].image
-                    }
-                  />
-                </div>
-                <div className="w-full aspect-square">
-                  <img
-                    alt="image1"
-                    className="w-full rounded-md"
-                    src={
-                      data.page.workshopsSection.workshops[0].images[0].image
-                    }
-                  />
-                </div>
-              </div>
-              <div className="justify-between flex flex-row mt-4 gap-4 md:w-full">
-                <div className="w-full aspect-square">
-                  <img
-                    alt="image1"
-                    className="w-full rounded-md"
-                    src={
-                      data.page.workshopsSection.workshops[0].images[1].image
-                    }
-                  />
-                </div>
-                <div className="w-full aspect-square">
-                  <img
-                    alt="image1"
-                    className="w-full rounded-md"
-                    src={
-                      data.page.workshopsSection.workshops[0].images[1].image
-                    }
-                  />
-                </div>
-              </div>
-            </div> 
-          </div>*/}
         </div>
       )}
     </div>
