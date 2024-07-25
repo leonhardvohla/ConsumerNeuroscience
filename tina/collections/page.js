@@ -329,13 +329,6 @@ export default {
           description: "Toggle the display of the section",
         },
         {
-          name: "sortWorkshops",
-          label: "Sort Workshops",
-          type: "string",
-          description: "Sort the workshops by year or manually",
-          options: ["Year (most recent first)", "Manual"],
-        },
-        {
           name: "workshops",
           label: "Workshops",
           type: "object",
@@ -593,6 +586,42 @@ export default {
           type: "string",
           description:
             "Choose a color for the text inside the inactive buttons colored with the highlight color",
+          ui: {
+            component: "color",
+            colorFormat: "hex",
+            widget: "sketch",
+          },
+        },
+        {
+          name: "inactiveWorkshopsTextColor",
+          label: "Inactive Workshops Year Text Color",
+          type: "string",
+          description:
+            "Choose a color for the text of the inactive year buttons for past workshops",
+          ui: {
+            component: "color",
+            colorFormat: "hex",
+            widget: "sketch",
+          },
+        },
+        {
+          name: "inactiveWorkshopsBackgroundColor",
+          label: "Inactive Workshops Year Background Color",
+          type: "string",
+          description:
+            "Choose a color for the background of the inactive year buttons for past workshops",
+          ui: {
+            component: "color",
+            colorFormat: "hex",
+            widget: "sketch",
+          },
+        },
+        {
+          name: "titleLineColor",
+          label: "Title Line Color",
+          type: "string",
+          description:
+            "Choose a color for the line underneath the titles of alternate sections",
           ui: {
             component: "color",
             colorFormat: "hex",

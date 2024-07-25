@@ -24,10 +24,17 @@ export default function HomePage(props) {
   const unactivatedHighlightTextColor =
     data.page.themeSection.unactivatedHighlightTextColor;
   const highlightTextColor = data.page.themeSection.highlightTextColor;
+  const workshopsTextColor = data.page.themeSection.inactiveWorkshopsTextColor;
+  const workshopsBackgroundColor =
+    data.page.themeSection.inactiveWorkshopsBackgroundColor;
+  const titleLineColor = data.page.themeSection.titleLineColor;
 
   // Add these at the top of your component function:
   const [isExpanded, setIsExpanded] = useState(false);
   const expandedRef = useRef(null);
+  const [selectedWorkshop, setSelectedWorkshop] = useState(
+    data.page.workshopsSection.workshops[0].title || null
+  );
 
   // Add this useEffect hook in your component:
   useEffect(() => {
@@ -319,10 +326,13 @@ export default function HomePage(props) {
               </span>
             </button>
           </div>
-          <hr className="w-auto my-4 bg-stone-500 md:my-6 xl:mb-10" />
+          <hr
+            className="w-auto my-4 md:my-6 xl:mb-10"
+            style={{ borderColor: titleLineColor }}
+          />
           <div
             ref={expandedRef}
-            className="grid gap-4 transition-[max-height] duration-500 ease-in-out overflow-hidden"
+            className="grid gap-4 transition-[max-height] duration-500 ease-in-out overflow-hidden -mt-6"
             style={{
               gridTemplateColumns:
                 "repeat(auto-fill, minmax(min(100%, 250px), 1fr))",
@@ -449,7 +459,7 @@ export default function HomePage(props) {
             <div className="flex flex-col md:flex-row justify-between">
               <img
                 alt="sponsor logo"
-                className="w-max md:w-auto h-auto sm:w-64 md:h-40 lg:h-50 mx-auto my-auto rounded-lg"
+                className="w-max md:w-auto h-auto sm:w-64 md:h-40 lg:h-50 mx-auto my-auto rounded-md"
                 data-tina-field={tinaField(
                   data.page.aboutSection.sponsor,
                   "sponsorImage"
@@ -553,6 +563,189 @@ export default function HomePage(props) {
               </div>
             </div>
           </div>
+        </div>
+      )}
+      {data.page.workshopsSection.workshopsToggle && (
+        <div
+          className="w-full py-10 px-16 md:px-24 lg:px-32"
+          style={{ backgroundColor: backgroundColor2 }}
+        >
+          <div
+            className="text-2xl lg:text-3xl md:text-left text-center"
+            style={{ color: fontColor }}
+          >
+            Past Workshops
+          </div>
+          <hr
+            className="w-auto my-4 md:my-6 xl:mb-10"
+            style={{ borderColor: titleLineColor }}
+          />
+          <div className="flex flex-row justify-center md:justify-start mt-8 mx-auto">
+            <div className="flex flex-row gap-2">
+              {data.page.workshopsSection.workshops.map((item, index) => {
+                if (item.title === selectedWorkshop) {
+                  return (
+                    <div
+                      className="rounded-md px-4 py-1.5 font-semibold transition-all duration-300 ease-in-out"
+                      style={{
+                        color: highlightTextColor,
+                        backgroundColor: highlightColor,
+                      }}
+                      data-tina-field={tinaField(item, "year")}
+                      key={index}
+                      onClick={() => setSelectedWorkshop(item.title)}
+                    >
+                      {new Date(item.year).getFullYear()}
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div
+                      className="rounded-md px-4 py-1.5 font-semibold cursor-pointer transition-all duration-300 ease-in-out"
+                      style={{
+                        color: workshopsTextColor,
+                        backgroundColor: workshopsBackgroundColor,
+                      }}
+                      data-tina-field={tinaField(item, "year")}
+                      key={index}
+                      onClick={() => setSelectedWorkshop(item.title)}
+                    >
+                      {new Date(item.year).getFullYear()}
+                    </div>
+                  );
+                }
+              })}
+            </div>
+            {/* <div className="rounded-full bg-pink-600 text-white px-4 py-1.5 font-semibold">
+              2021
+            </div>
+            <div className="rounded-full px-4 py-1.5 font-semibold text-stone-600">
+              2018
+            </div>
+            <div className="rounded-full px-4 py-1.5 font-semibold text-stone-600">
+              2017
+            </div>
+            <div className="rounded-full px-4 py-1.5 font-semibold text-stone-600">
+              2016
+            </div> */}
+          </div>
+          {/* find the workshop matching selectedWorkshop and return a div containing its data (or display nothing if selectedWorkshop is null) */}
+          {data.page.workshopsSection.workshops.map((item, index) => {
+            if (item.title === selectedWorkshop) {
+              return (
+                <>
+                  <div
+                    className="text-xl font-semibold text-center md:text-left mt-6 mb-1 transition-all duration-300 ease-in-out"
+                    style={{
+                      color: fontColor,
+                    }}
+                    data-tina-field={tinaField(item, "title")}
+                  >
+                    {item.title}
+                  </div>
+                  <div className="flex flex-col">
+                    <div
+                      className="text-sm font-light text-center mt-6 md:my-4 md:text-left"
+                      style={{
+                        color: fontColor,
+                      }}
+                      data-tina-field={tinaField(item, "description")}
+                    >
+                      {item.description}
+                    </div>
+                    <img
+                      alt="image1"
+                      className="w-full mt-6 rounded-md"
+                      src={item.poster}
+                      data-tina-field={tinaField(item, "poster")}
+                    />
+                    <div className="flex overflow-x-auto overflow-y-hidden gap-2 pt-2">
+                      {item.images.map((image, index) => {
+                        return (
+                          <div key={index} className="flex-shrink-0">
+                            <img
+                              className="h-20 sm:h-32 md:h-40 w-auto rounded-md"
+                              data-tina-field={tinaField(image, "image")}
+                              src={image.image}
+                              alt={`Image ${index}`}
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </>
+              );
+            }
+          })}
+          {/* <div className="text-xl font-semibold text-center md:text-left mt-6 mb-1">
+            Conceptual, Methodological, and Substantive Opportunities for
+            Collaboration at the Interface of Consumer Research and Functional
+            Neuroimaging
+          </div>
+          <div className="flex flex-col">
+            <div className="text-sm font-light text-center mt-6 md:my-4 md:text-left">
+              The First Workshop on Consumer Neuroscience was a Pre-Conference
+              Workshop of the 2016 Association for Consumer Research Annual
+              Conference. It was hosted at the Bauhaus Archive in Berlin,
+              Germany on Thursday, October 27, 2016. During the pre-conference
+              workshop, three “design thinking challenges” were offered and
+              participants rotated between three tables and generated ideas.
+              “Design thinking” is a method for solution-focused thinking and
+              employs prototyping and social inspiration for creative problem
+              resolution and was applied to conceptual, methodological, and
+              substantive issues concerning consumer neuroscience. Two keynote
+              speakers, Bernd Weber and Michael Schaefer, inspired participants
+              with new ideas for collaboration.
+            </div>
+            <img
+              alt="image1"
+              className="w-full mt-6 rounded-md"
+              src={data.page.workshopsSection.workshops[0].poster}
+            />
+            <div className="flex flex-col md:flex-row md:gap-4">
+              <div className="justify-between flex flex-row mt-4 gap-4 md:w-full">
+                <div className="w-full aspect-square">
+                  <img
+                    alt="image1"
+                    className="w-full rounded-md"
+                    src={
+                      data.page.workshopsSection.workshops[0].images[0].image
+                    }
+                  />
+                </div>
+                <div className="w-full aspect-square">
+                  <img
+                    alt="image1"
+                    className="w-full rounded-md"
+                    src={
+                      data.page.workshopsSection.workshops[0].images[0].image
+                    }
+                  />
+                </div>
+              </div>
+              <div className="justify-between flex flex-row mt-4 gap-4 md:w-full">
+                <div className="w-full aspect-square">
+                  <img
+                    alt="image1"
+                    className="w-full rounded-md"
+                    src={
+                      data.page.workshopsSection.workshops[0].images[1].image
+                    }
+                  />
+                </div>
+                <div className="w-full aspect-square">
+                  <img
+                    alt="image1"
+                    className="w-full rounded-md"
+                    src={
+                      data.page.workshopsSection.workshops[0].images[1].image
+                    }
+                  />
+                </div>
+              </div>
+            </div> 
+          </div>*/}
         </div>
       )}
     </div>
