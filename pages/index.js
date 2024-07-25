@@ -296,7 +296,7 @@ export default function HomePage(props) {
 
       {data.page.researchSection.researchToggle && (
         <div
-          className="px-10 sm:px-20 md:px-24 lg:px-32 mt-12 md:mt-14 xl:mt-18 py-10"
+          className="px-10 sm:px-20 md:px-24 lg:px-32 mt-16 lg:mt-20 py-16 lg:py-20"
           style={{ color: fontColor, backgroundColor: backgroundColor2 }}
           id="researchSection"
         >
@@ -451,7 +451,7 @@ export default function HomePage(props) {
       )}
       {data.page.aboutSection.aboutToggle && (
         <div
-          className="flex flex-col lg:flex-row lg:mx-32 lg:gap-10 lg:justify-between py-14"
+          className="flex flex-col lg:flex-row lg:mx-32 lg:gap-10 lg:justify-between py-16 lg:py-20"
           id="aboutSection"
           style={{ color: fontColor, backgroundColor: backgroundColor1 }}
         >
@@ -567,7 +567,7 @@ export default function HomePage(props) {
       )}
       {data.page.workshopsSection.workshopsToggle && (
         <div
-          className="w-full py-10 px-16 md:px-24 lg:px-32"
+          className="w-full py-16 lg:py-20 px-16 md:px-24 lg:px-32"
           style={{ backgroundColor: backgroundColor2 }}
         >
           <div
