@@ -35,6 +35,7 @@ export default function HomePage(props) {
   const [selectedWorkshop, setSelectedWorkshop] = useState(
     data.page.workshopsSection.workshops[0].title || null
   );
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Add this useEffect hook in your component:
   useEffect(() => {
@@ -186,14 +187,22 @@ export default function HomePage(props) {
           </a>
           <div className="hidden md:flex flex-row justify-between">
             <a
-              href="#"
-              className="text-xs lg:text-sm xl:text-base my-auto font-semibold"
+              onClick={() => {
+                document
+                  .getElementById("researchSection")
+                  .scrollIntoView({ behavior: "smooth" });
+              }}
+              className="text-xs lg:text-sm xl:text-base my-auto font-semibold cursor-pointer"
             >
               Research
             </a>
             <a
-              href="#"
-              className="text-xs lg:text-sm xl:text-base my-auto mx-5 lg:mx-10 xl:mx-14 font-semibold"
+              onClick={() => {
+                document
+                  .getElementById("workshopsSection")
+                  .scrollIntoView({ behavior: "smooth" });
+              }}
+              className="text-xs lg:text-sm xl:text-base my-auto mx-5 lg:mx-10 xl:mx-14 font-semibold cursor-pointer"
             >
               Past Workshops
             </a>
@@ -569,6 +578,7 @@ export default function HomePage(props) {
         <div
           className="w-full py-16 lg:py-20 px-16 md:px-24 lg:px-32"
           style={{ backgroundColor: backgroundColor2 }}
+          id="workshopsSection"
         >
           <div
             className="text-2xl lg:text-3xl md:text-left text-center"
