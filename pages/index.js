@@ -858,17 +858,20 @@ export default function HomePage(props) {
           )}
           {data.page.footer.footerToggle && (
             <div
-              className="w-full py-16 lg:py-20 px-16 md:px-24 lg:px-32 flex flex-col lg:flex-row justify-between"
+              className="w-full py-16 px-16 md:px-24 lg:px-32 flex flex-wrap items-center md:justify-between justify-center gap-8"
               style={{ backgroundColor: backgroundColor1, color: fontColor }}
               id="footer"
             >
-              <div
-                className="text-sm font-light text-center lg:text-left"
-                data-tina-field={tinaField(data.page.footer, "footerText")}
-              >
-                <TinaMarkdown content={data.page.footer.footerText} />
+              <div className="flex justify-center sm:justify-start">
+                <div
+                  className="text-sm font-light grow shrink basis-[30rem] w-auto text-center sm:text-left"
+                  data-tina-field={tinaField(data.page.footer, "footerText")}
+                >
+                  <TinaMarkdown content={data.page.footer.footerText} />
+                </div>
               </div>
-              <div className="flex flex-col lg:flex-row mt-4 lg:mt-0">
+
+              <div className="flex flex-wrap justify-center sm:justify-end items-center gap-x-6 gap-y-2 grow-0 shrink-0">
                 {data.page.footer.contactEmail.contactEmailToggle && (
                   <a
                     href={`mailto:${data.page.footer.contactEmail.contactEmail}`}
@@ -876,23 +879,21 @@ export default function HomePage(props) {
                       data.page.footer.contactEmail,
                       "contactEmailText"
                     )}
-                    className="text-sm text-center lg:text-left font-medium"
+                    className="text-sm text-center sm:text-right font-medium whitespace-nowrap"
                   >
                     {data.page.footer.contactEmail.contactEmailText}
                   </a>
                 )}
-                {data.page.footer.footerLegalPages.map((item, index) => {
-                  return (
-                    <div
-                      className="text-sm text-center lg:text-left font-medium mt-2 md:mt-0 lg:ml-4 cursor-pointer"
-                      data-tina-field={tinaField(item, "title")}
-                      key={index}
-                      onClick={() => setViewLegalPage(`${item.title}`)}
-                    >
-                      {item.title}
-                    </div>
-                  );
-                })}
+                {data.page.footer.footerLegalPages.map((item, index) => (
+                  <div
+                    className="text-sm text-center sm:text-right font-medium cursor-pointer whitespace-nowrap"
+                    data-tina-field={tinaField(item, "title")}
+                    key={index}
+                    onClick={() => setViewLegalPage(`${item.title}`)}
+                  >
+                    {item.title}
+                  </div>
+                ))}
               </div>
             </div>
           )}
