@@ -6,6 +6,7 @@ import React, { useState, useEffect, useRef } from "react";
 import menu from "../public/icons/menu.svg";
 import download from "../public/icons/download.svg";
 import link from "../public/icons/link.svg";
+import close from "../public/icons/close.svg";
 
 export default function HomePage(props) {
   const { data } = useTina({
@@ -36,6 +37,39 @@ export default function HomePage(props) {
     data.page.workshopsSection.workshops[0].title || null
   );
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const menuSectionRef = useRef(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  useEffect(() => {
+    const handleClick = (event) => {
+      if (
+        menuSectionRef.current &&
+        !menuSectionRef.current.contains(event.target)
+      ) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    const handleScroll = () => {
+      setIsMobileMenuOpen(false);
+    };
+
+    if (isMobileMenuOpen) {
+      document.addEventListener("mousedown", handleClick);
+      window.addEventListener("scroll", handleScroll);
+      setIsTransitioning(true);
+    } else {
+      document.removeEventListener("mousedown", handleClick);
+      window.removeEventListener("scroll", handleScroll);
+      setTimeout(() => setIsTransitioning(false), 300); // wait for fade-out transition
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isMobileMenuOpen, setIsMobileMenuOpen]);
 
   // Add this useEffect hook in your component:
   useEffect(() => {
@@ -157,6 +191,77 @@ export default function HomePage(props) {
         backgroundColor: backgroundColor1,
       }}
     >
+      {isMobileMenuOpen && (
+        <div
+          className="absolute top-0 left-0 w-full h-full md:hidden transition-all duration-300 ease-in-out"
+          id="menuOverlay"
+        >
+          <div
+            className="absolute top-0 left-0 w-full h-full"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          <div
+            className="absolute top-0 right-0 flex flex-col justify-end pt-10 px-8 sm:px-16 transition-all duration-300 ease-in-out"
+            id="menuSection"
+            ref={menuSectionRef}
+          >
+            <div
+              className="shadow-md p-6 rounded-md flex flex-col gap-4 text-center transition-all duration-300 ease-in-out"
+              style={{
+                backgroundColor: backgroundColor2,
+                color: fontColor,
+              }}
+            >
+              {/* close button */}
+              <div
+                className="w-6 h-6 cursor-pointer mx-auto"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <DynamicSvg
+                  src={close.src}
+                  color={fontColor}
+                  className="w-full h-full"
+                />
+              </div>
+              <a
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  document
+                    .getElementById("researchSection")
+                    .scrollIntoView({ behavior: "smooth" });
+                }}
+                className="text-xs lg:text-sm xl:text-base my-auto font-semibold cursor-pointer"
+              >
+                Research
+              </a>
+              <a
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  document
+                    .getElementById("workshopsSection")
+                    .scrollIntoView({ behavior: "smooth" });
+                }}
+                className="text-xs lg:text-sm xl:text-base my-auto lg:mx-10 xl:mx-14 font-semibold cursor-pointer"
+              >
+                Past Workshops
+              </a>
+
+              <ActionButton
+                actionButtonToggle={
+                  data.page.header.actionButton.actionButtonToggle
+                }
+                actionButtonLink={
+                  data.page.header.actionButton.actionButtonLink
+                }
+                actionButtonText={data.page.header.actionButton.actionButton}
+                fontColor={fontColor}
+                hoverColor={hoverColor}
+                tinaField={tinaField(data.page.header, "actionButton")}
+              />
+            </div>
+          </div>
+        </div>
+      )}
       <div className="fixed top-0 left-0 w-12 h-12 bg-blue-400 sm:bg-green-300 md:bg-yellow-400 lg:bg-red-300 xl:bg-purple-300"></div>
 
       <div
@@ -174,10 +279,10 @@ export default function HomePage(props) {
             />
           </a>
           <a
-            href="#"
-            className="max-h-max w-auto flex flex-col justify-center md:hidden"
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="max-h-max w-auto flex flex-col justify-center md:hidden cursor-pointer"
           >
-            <div className="h-7 w-7">
+            <div className="h-7 w-auto">
               <DynamicSvg
                 src={menu.src}
                 color={fontColor}
