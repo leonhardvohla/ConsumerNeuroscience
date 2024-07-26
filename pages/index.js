@@ -871,7 +871,7 @@ export default function HomePage(props) {
                 </div>
               </div>
 
-              <div className="flex flex-wrap justify-center sm:justify-end items-center gap-x-6 gap-y-2 grow-0 shrink-0">
+              <div className="flex flex-col sm:flex-row flex-wrap justify-center sm:justify-end items-center gap-x-6 gap-y-2 grow-0 shrink-0">
                 {data.page.footer.contactEmail.contactEmailToggle && (
                   <a
                     href={`mailto:${data.page.footer.contactEmail.contactEmail}`}
