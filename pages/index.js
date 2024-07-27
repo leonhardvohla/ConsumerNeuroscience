@@ -289,7 +289,7 @@ export default function HomePage(props) {
           {data.page.footer.footerLegalPages.map((item, index) => {
             if (item.title === viewLegalPage) {
               return (
-                <>
+                <div key={index}>
                   <div
                     className="text-xl font-medium text-left pb-4"
                     data-tina-field={tinaField(item, "title")}
@@ -302,7 +302,7 @@ export default function HomePage(props) {
                   >
                     <TinaMarkdown content={item.content} />
                   </div>
-                </>
+                </div>
               );
             }
           })}
