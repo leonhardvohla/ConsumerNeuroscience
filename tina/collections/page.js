@@ -175,6 +175,22 @@ export default {
           type: "boolean",
           description: "Toggle the display of the section",
         },
+        {
+          name: "researchTitle",
+          label: "Research Title",
+          type: "string",
+          description: "The title for the research section",
+          // required: true,
+          // 39
+          validate: (value) => {
+            if (!value || value.trim() === "") {
+              return "This field is required.";
+            }
+            if (value.length > 39) {
+              return "Must be less than 39 characters";
+            }
+          },
+        },
         // {
         //   name: "researchSort",
         //   label: "Sort Research",

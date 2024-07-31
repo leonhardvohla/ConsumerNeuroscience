@@ -529,12 +529,18 @@ export default function HomePage(props) {
               id="researchSection"
             >
               <div className="flex flex-row justify-center md:justify-between">
-                <div className="text-2xl lg:text-3xl xl:text-4xl text-center md:text-left">
-                  Curation of fMRI Research in Marketing
+                <div
+                  className="text-2xl lg:text-3xl xl:text-4xl text-center md:text-left"
+                  data-tina-field={tinaField(
+                    data.page.researchSection,
+                    "researchTitle"
+                  )}
+                >
+                  {data.page.researchSection.researchTitle}
                 </div>
                 <button
                   onClick={() => setIsExpanded(!isExpanded)}
-                  className={`hidden md:flex actionButton group text-xs lg:text-sm xl:text-base my-auto border px-4 py-2 rounded-full font-semibold transition-colors duration-300 ease-in-out relative overflow-hidden mr-0 mt-2.5`}
+                  className={`hidden md:flex actionButton group text-xs lg:text-sm xl:text-base my-auto border px-4 py-2 rounded-full font-semibold transition-colors duration-300 ease-in-out relative overflow-hidden mr-0`}
                   style={{
                     borderColor: fontColor,
                     color: fontColor,
@@ -656,7 +662,7 @@ export default function HomePage(props) {
               >
                 <button
                   onClick={() => setIsExpanded(!isExpanded)}
-                  className={`actionButton group text-xs lg:text-sm xl:text-base my-auto border px-4 py-2 rounded-full font-semibold transition-colors duration-300 ease-in-out relative overflow-hidden mx-auto mt-2.5`}
+                  className={`actionButton group text-xs lg:text-sm xl:text-base my-auto border px-4 py-2 rounded-full font-semibold transition-colors duration-300 ease-in-out relative overflow-hidden mx-auto`}
                   style={{
                     borderColor: fontColor,
                     color: fontColor,
