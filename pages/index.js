@@ -400,7 +400,7 @@ export default function HomePage(props) {
               id="heroSection"
             >
               <div
-                className="md:hidden w-full h-52 sm:h-64 mt-10 sm:my-10 bg-main bg-cover bg-right rounded-md"
+                className="sm:hidden w-full h-52 sm:h-64 mt-10 sm:my-10 bg-main bg-cover bg-right rounded-md"
                 style={{
                   backgroundImage: `url(${data.page.heroSection.mainImage})`,
                 }}
@@ -408,7 +408,7 @@ export default function HomePage(props) {
               ></div>
               <img
                 alt="main image"
-                className="hidden md:flex w-max bg-contain bg-no-repeat my-10 lg:my-12 rounded-md"
+                className="hidden sm:flex w-max bg-contain bg-no-repeat my-10 lg:my-12 rounded-md"
                 data-tina-field={tinaField(data.page.heroSection, "mainImage")}
                 src={data.page.heroSection.mainImage}
               />
@@ -875,7 +875,7 @@ export default function HomePage(props) {
             >
               <div className="flex justify-center sm:justify-start">
                 <div
-                  className="text-sm font-light grow shrink basis-[30rem] w-auto text-center sm:text-left"
+                  className="text-sm font-light grow shrink basis-[30rem] w-auto text-center md:text-left"
                   data-tina-field={tinaField(data.page.footer, "footerText")}
                 >
                   <TinaMarkdown content={data.page.footer.footerText} />
