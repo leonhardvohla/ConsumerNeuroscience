@@ -41,33 +41,17 @@ export default function HomePage(props) {
   const menuSectionRef = useRef(null);
   const [viewLegalPage, setViewLegalPage] = useState(null);
 
-  // useEffect(() => {
-  //   const handleClick = (event) => {
-  //     if (
-  //       menuSectionRef.current &&
-  //       !menuSectionRef.current.contains(event.target)
-  //     ) {
-  //       setIsMobileMenuOpen(false);
-  //     }
-  //   };
+  // if scroll when mobileMenu is open, close the menu
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
 
-  //   const handleScroll = () => {
-  //     setIsMobileMenuOpen(false);
-  //   };
-
-  //   if (isMobileMenuOpen) {
-  //     document.addEventListener("mousedown", handleClick);
-  //     window.addEventListener("scroll", handleScroll);
-  //   } else {
-  //     document.removeEventListener("mousedown", handleClick);
-  //     window.removeEventListener("scroll", handleScroll);
-  //   }
-
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClick);
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [isMobileMenuOpen, setIsMobileMenuOpen]);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isMobileMenuOpen]);
 
   // Add this useEffect hook in your component:
   useEffect(() => {
@@ -790,7 +774,7 @@ export default function HomePage(props) {
                 style={{ borderColor: titleLineColor }}
               />
               <div className="flex flex-row justify-center md:justify-start mt-8 mx-auto">
-                <div className="flex flex-row gap-2">
+                <div className="flex flex-row gap-2 overflow-x-scroll">
                   {data.page.workshopsSection.workshops.map((item, index) => {
                     if (item.title === selectedWorkshop) {
                       return (
