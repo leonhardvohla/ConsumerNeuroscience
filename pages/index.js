@@ -476,49 +476,52 @@ export default function HomePage(props) {
                 </div>
               </div>
 
-              <div className="w-full md:w-auto mt-6 flex flex-col md:flex-row justify-center md:justify-start gap-3 md:gap-6">
-                {data.page.heroSection.downloadButton.actionButtonToggle && (
-                  <a
-                    href={
-                      data.page.heroSection.downloadButton.downloadButtonFile
-                    }
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="order-2 mx-auto md:mx-0 text-xs lg:text-sm xl:text-base font-semibold flex flex-row md:my-auto items-center"
-                  >
-                    <div
-                      data-tina-field={tinaField(
-                        data.page.heroSection.downloadButton,
-                        "actionButton"
-                      )}
+              {(data.page.heroSection.downloadButton.downloadButtonToggle ||
+                data.page.heroSection.actionButton.actionButtonToggle) && (
+                <div className="w-full md:w-auto mt-6 flex flex-col md:flex-row justify-center md:justify-start gap-3 md:gap-6">
+                  {data.page.heroSection.downloadButton.actionButtonToggle && (
+                    <a
+                      href={
+                        data.page.heroSection.downloadButton.downloadButtonFile
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="order-2 mx-auto md:mx-0 text-xs lg:text-sm xl:text-base font-semibold flex flex-row md:my-auto items-center"
                     >
-                      {data.page.heroSection.downloadButton.actionButton}
-                    </div>
-                    <div className="w-3 h-3 ml-1 flex items-center justify-center">
-                      <DynamicSvg
-                        src={download.src}
-                        color={fontColor}
-                        className="w-full h-full"
-                      />
-                    </div>
-                  </a>
-                )}
-                <ActionButton
-                  actionButtonToggle={
-                    data.page.heroSection.actionButton.actionButtonToggle
-                  }
-                  actionButtonLink={
-                    data.page.heroSection.actionButton.actionButtonLink
-                  }
-                  actionButtonText={
-                    data.page.heroSection.actionButton.actionButton
-                  }
-                  fontColor={fontColor}
-                  hoverColor={hoverColor}
-                  tinaField={tinaField(data.page.heroSection, "actionButton")}
-                  additionalClasses="order-1 mx-auto md:mx-0 text-xs lg:text-sm xl:text-base my-auto "
-                />
-              </div>
+                      <div
+                        data-tina-field={tinaField(
+                          data.page.heroSection.downloadButton,
+                          "actionButton"
+                        )}
+                      >
+                        {data.page.heroSection.downloadButton.actionButton}
+                      </div>
+                      <div className="w-3 h-3 ml-1 flex items-center justify-center">
+                        <DynamicSvg
+                          src={download.src}
+                          color={fontColor}
+                          className="w-full h-full"
+                        />
+                      </div>
+                    </a>
+                  )}
+                  <ActionButton
+                    actionButtonToggle={
+                      data.page.heroSection.actionButton.actionButtonToggle
+                    }
+                    actionButtonLink={
+                      data.page.heroSection.actionButton.actionButtonLink
+                    }
+                    actionButtonText={
+                      data.page.heroSection.actionButton.actionButton
+                    }
+                    fontColor={fontColor}
+                    hoverColor={hoverColor}
+                    tinaField={tinaField(data.page.heroSection, "actionButton")}
+                    additionalClasses="order-1 mx-auto md:mx-0 text-xs lg:text-sm xl:text-base my-auto "
+                  />
+                </div>
+              )}
             </div>
           )}
 
