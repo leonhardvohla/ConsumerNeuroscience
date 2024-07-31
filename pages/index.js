@@ -490,7 +490,7 @@ export default function HomePage(props) {
             >
               <div className="flex flex-row justify-center md:justify-between">
                 <div className="text-2xl lg:text-3xl xl:text-4xl text-center md:text-left">
-                  Recent Research
+                  Curation of fMRI Research in Marketing
                 </div>
                 <button
                   onClick={() => setIsExpanded(!isExpanded)}
@@ -829,26 +829,33 @@ export default function HomePage(props) {
                         >
                           {item.description}
                         </div>
-                        <img
-                          alt="image1"
-                          className="w-full mt-6 rounded-md"
-                          src={item.poster}
-                          data-tina-field={tinaField(item, "poster")}
-                        />
-                        <div className="flex overflow-x-auto overflow-y-hidden gap-2 pt-2">
-                          {item.images.map((image, index) => {
-                            return (
-                              <div key={index} className="flex-shrink-0">
-                                <img
-                                  className="h-20 sm:h-32 md:h-40 w-auto rounded-md"
-                                  data-tina-field={tinaField(image, "image")}
-                                  src={image.image}
-                                  alt={`Image ${index}`}
-                                />
-                              </div>
-                            );
-                          })}
-                        </div>
+                        {item.poster && (
+                          <img
+                            alt="image1"
+                            className="w-full mt-6 rounded-md"
+                            src={item.poster}
+                            data-tina-field={tinaField(item, "poster")}
+                          />
+                        )}
+                        {item.images && (
+                          <div className="flex overflow-x-auto overflow-y-hidden gap-2 pt-2">
+                            {item.images.map((image, index) => {
+                              if (!image.image) {
+                                return null;
+                              }
+                              return (
+                                <div key={index} className="flex-shrink-0">
+                                  <img
+                                    className="h-20 sm:h-32 md:h-40 w-auto rounded-md"
+                                    data-tina-field={tinaField(image, "image")}
+                                    src={image.image}
+                                    alt={`Image ${index}`}
+                                  />
+                                </div>
+                              );
+                            })}
+                          </div>
+                        )}
                       </div>
                     </div>
                   );
