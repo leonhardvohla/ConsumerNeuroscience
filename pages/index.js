@@ -41,33 +41,33 @@ export default function HomePage(props) {
   const menuSectionRef = useRef(null);
   const [viewLegalPage, setViewLegalPage] = useState(null);
 
-  useEffect(() => {
-    const handleClick = (event) => {
-      if (
-        menuSectionRef.current &&
-        !menuSectionRef.current.contains(event.target)
-      ) {
-        setIsMobileMenuOpen(false);
-      }
-    };
+  // useEffect(() => {
+  //   const handleClick = (event) => {
+  //     if (
+  //       menuSectionRef.current &&
+  //       !menuSectionRef.current.contains(event.target)
+  //     ) {
+  //       setIsMobileMenuOpen(false);
+  //     }
+  //   };
 
-    const handleScroll = () => {
-      setIsMobileMenuOpen(false);
-    };
+  //   const handleScroll = () => {
+  //     setIsMobileMenuOpen(false);
+  //   };
 
-    if (isMobileMenuOpen) {
-      document.addEventListener("mousedown", handleClick);
-      window.addEventListener("scroll", handleScroll);
-    } else {
-      document.removeEventListener("mousedown", handleClick);
-      window.removeEventListener("scroll", handleScroll);
-    }
+  //   if (isMobileMenuOpen) {
+  //     document.addEventListener("mousedown", handleClick);
+  //     window.addEventListener("scroll", handleScroll);
+  //   } else {
+  //     document.removeEventListener("mousedown", handleClick);
+  //     window.removeEventListener("scroll", handleScroll);
+  //   }
 
-    return () => {
-      document.removeEventListener("mousedown", handleClick);
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [isMobileMenuOpen, setIsMobileMenuOpen]);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClick);
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, [isMobileMenuOpen, setIsMobileMenuOpen]);
 
   // Add this useEffect hook in your component:
   useEffect(() => {
@@ -148,27 +148,38 @@ export default function HomePage(props) {
 
   const DynamicSvg = ({ src, color, className }) => {
     const [svgContent, setSvgContent] = useState(null);
+    const isMounted = useRef(true);
 
     useEffect(() => {
+      isMounted.current = true;
       fetch(src)
         .then((response) => response.text())
         .then((text) => {
-          const parser = new DOMParser();
-          const svgDoc = parser.parseFromString(text, "image/svg+xml");
-          const svgElement = svgDoc.documentElement;
+          if (isMounted.current) {
+            const parser = new DOMParser();
+            const svgDoc = parser.parseFromString(text, "image/svg+xml");
+            const svgElement = svgDoc.documentElement;
 
-          // Set the color for both stroke and fill
-          svgElement.querySelectorAll("*").forEach((el) => {
-            if (el.getAttribute("stroke")) {
-              el.setAttribute("stroke", color);
-            }
-            if (el.getAttribute("fill") && el.getAttribute("fill") !== "none") {
-              el.setAttribute("fill", color);
-            }
-          });
+            // Set the color for both stroke and fill
+            svgElement.querySelectorAll("*").forEach((el) => {
+              if (el.getAttribute("stroke")) {
+                el.setAttribute("stroke", color);
+              }
+              if (
+                el.getAttribute("fill") &&
+                el.getAttribute("fill") !== "none"
+              ) {
+                el.setAttribute("fill", color);
+              }
+            });
 
-          setSvgContent(svgElement.outerHTML);
+            setSvgContent(svgElement.outerHTML);
+          }
         });
+
+      return () => {
+        isMounted.current = false;
+      };
     }, [src, color]);
 
     if (!svgContent) {
@@ -189,83 +200,92 @@ export default function HomePage(props) {
         backgroundColor: backgroundColor1,
       }}
     >
-      {isMobileMenuOpen &&
-        (data.page.researchSection.researchToggle ||
-          data.page.workshopsSection.workshopsToggle ||
-          data.page.header.actionButton.actionButtonToggle) && (
+      {(data.page.researchSection.researchToggle ||
+        data.page.workshopsSection.workshopsToggle ||
+        data.page.header.actionButton.actionButtonToggle) && (
+        <div
+          className={`fixed inset-0 md:hidden transition-all duration-500 ease-in-out ${
+            isMobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+          }`}
+          id="menuOverlay"
+        >
           <div
-            className="absolute top-0 left-0 w-full h-full md:hidden transition-all duration-300 ease-in-out"
-            id="menuOverlay"
+            className="absolute top-0 left-0 w-full h-full"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          <div
+            className="absolute top-0 right-0 flex flex-col justify-end pt-10 px-8 sm:px-16"
+            id="menuSection"
+            ref={menuSectionRef}
           >
             <div
-              className="absolute top-0 left-0 w-full h-full"
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
-            <div
-              className="absolute top-0 right-0 flex flex-col justify-end pt-10 px-8 sm:px-16 transition-all duration-300 ease-in-out"
-              id="menuSection"
-              ref={menuSectionRef}
+              className="shadow-md p-6 rounded-md flex flex-col gap-4 text-center"
+              style={{
+                backgroundColor: backgroundColor2,
+                color: fontColor,
+              }}
             >
-              <div
-                className="shadow-md p-6 rounded-md flex flex-col gap-4 text-center transition-all duration-300 ease-in-out"
-                style={{
-                  backgroundColor: backgroundColor2,
-                  color: fontColor,
+              <button
+                className="w-6 h-6 cursor-pointer mx-auto relative"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setIsMobileMenuOpen(false);
                 }}
+                aria-label="Close menu"
               >
-                <div
-                  className="w-6 h-6 cursor-pointer mx-auto"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <DynamicSvg
-                    src={close.src}
-                    color={fontColor}
-                    className="w-full h-full"
-                  />
-                </div>
-                {data.page.researchSection.researchToggle && (
-                  <a
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      document
-                        .getElementById("researchSection")
-                        .scrollIntoView({ behavior: "smooth" });
-                    }}
-                    className="text-xs lg:text-sm xl:text-base my-auto font-semibold cursor-pointer"
-                  >
-                    Research
-                  </a>
-                )}
-                {data.page.workshopsSection.workshopsToggle && (
-                  <a
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                      document
-                        .getElementById("workshopsSection")
-                        .scrollIntoView({ behavior: "smooth" });
-                    }}
-                    className="text-xs lg:text-sm xl:text-base my-auto lg:mx-10 xl:mx-14 font-semibold cursor-pointer"
-                  >
-                    Past Workshops
-                  </a>
-                )}
-
-                <ActionButton
-                  actionButtonToggle={
-                    data.page.header.actionButton.actionButtonToggle
-                  }
-                  actionButtonLink={
-                    data.page.header.actionButton.actionButtonLink
-                  }
-                  actionButtonText={data.page.header.actionButton.actionButton}
-                  fontColor={fontColor}
-                  hoverColor={hoverColor}
-                  tinaField={tinaField(data.page.header, "actionButton")}
+                <DynamicSvg
+                  src={close.src}
+                  color={fontColor}
+                  className="w-full h-full absolute top-0 left-0"
                 />
-              </div>
+                <span className="sr-only">Close</span>
+              </button>
+              {data.page.researchSection.researchToggle && (
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsMobileMenuOpen(false);
+                    document
+                      .getElementById("researchSection")
+                      .scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="text-xs lg:text-sm xl:text-base my-auto font-semibold cursor-pointer"
+                >
+                  Research
+                </a>
+              )}
+              {data.page.workshopsSection.workshopsToggle && (
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsMobileMenuOpen(false);
+                    document
+                      .getElementById("workshopsSection")
+                      .scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="text-xs lg:text-sm xl:text-base my-auto lg:mx-10 xl:mx-14 font-semibold cursor-pointer"
+                >
+                  Past Workshops
+                </a>
+              )}
+
+              <ActionButton
+                actionButtonToggle={
+                  data.page.header.actionButton.actionButtonToggle
+                }
+                actionButtonLink={
+                  data.page.header.actionButton.actionButtonLink
+                }
+                actionButtonText={data.page.header.actionButton.actionButton}
+                fontColor={fontColor}
+                hoverColor={hoverColor}
+                tinaField={tinaField(data.page.header, "actionButton")}
+              />
             </div>
           </div>
-        )}
+        </div>
+      )}
       {viewLegalPage && (
         <div
           className="h-screen w-screen px-10 sm:px-20 md:px-24 lg:px-32 pt-14"
