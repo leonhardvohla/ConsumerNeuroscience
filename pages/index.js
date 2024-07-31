@@ -319,8 +319,15 @@ export default function HomePage(props) {
       {!viewLegalPage && (
         <>
           <div
-            className="px-10 sm:px-20 md:px-24 lg:px-32 pt-14"
-            style={{ color: fontColor, backgroundColor: backgroundColor1 }}
+            className="px-10 sm:px-20 md:px-24 lg:px-32 pt-14 "
+            style={{
+              color: fontColor,
+              backgroundColor:
+                data.page.heroSection.sectionBackgroundColor ===
+                "Background Color 1"
+                  ? backgroundColor1
+                  : backgroundColor2,
+            }}
             id="headerSection"
           >
             <div className="flex flex-row justify-between">
@@ -395,23 +402,52 @@ export default function HomePage(props) {
           </div>
           {data.page.heroSection.heroToggle && (
             <div
-              className="px-10 sm:px-20 md:px-24 lg:px-32"
-              style={{ color: fontColor, backgroundColor: backgroundColor1 }}
+              className="px-10 sm:px-20 md:px-24 lg:px-32 pb-16 lg:pb-20"
+              // if data.page.heroSection.sectionBackgroundColor === "Background Color 1", backgroundColor1 is used, else if it is "Background Color 2", backgroundColor2 is used
+              style={{
+                color: fontColor,
+                backgroundColor:
+                  data.page.heroSection.sectionBackgroundColor ===
+                  "Background Color 1"
+                    ? backgroundColor1
+                    : backgroundColor2,
+              }}
+              // style={{ color: fontColor, backgroundColor: backgroundColor1 }}
+
               id="heroSection"
             >
-              <div
-                className="sm:hidden w-full h-52 sm:h-64 mt-10 sm:my-10 bg-main bg-cover bg-right rounded-md"
-                style={{
-                  backgroundImage: `url(${data.page.heroSection.mainImage})`,
-                }}
-                data-tina-field={tinaField(data.page.heroSection, "mainImage")}
-              ></div>
-              <img
-                alt="main image"
-                className="hidden sm:flex w-max bg-contain bg-no-repeat my-10 lg:my-12 rounded-md"
-                data-tina-field={tinaField(data.page.heroSection, "mainImage")}
-                src={data.page.heroSection.mainImage}
-              />
+              {data.page.heroSection.mainImage && (
+                <div className="pt-10 md:py-10 lg:py-12">
+                  <div
+                    className="sm:hidden w-full h-52 sm:h-64 bg-main bg-cover rounded-md"
+                    // if data.page.heroSection.smallImageCropDirection === "Left", background image is aligned to left,  if it is "Right", if it is "Center", background image is aligned to center
+                    style={{
+                      backgroundPosition:
+                        data.page.heroSection.smallImageCropDirection === "Left"
+                          ? "left"
+                          : data.page.heroSection.smallImageCropDirection ===
+                            "Right"
+                          ? "right"
+                          : "center",
+                      backgroundImage: `url(${data.page.heroSection.mainImage})`,
+                    }}
+                    data-tina-field={tinaField(
+                      data.page.heroSection,
+                      "mainImage"
+                    )}
+                  ></div>
+
+                  <img
+                    alt="main image"
+                    className="hidden sm:flex w-max bg-contain bg-no-repeat  rounded-md"
+                    data-tina-field={tinaField(
+                      data.page.heroSection,
+                      "mainImage"
+                    )}
+                    src={data.page.heroSection.mainImage}
+                  />
+                </div>
+              )}
               <div className="mt-8 flex flex-col md:flex-row gap-6 md:justify-between">
                 <div
                   className="text-2xl sm:text-3xl md:text-4xs md:w-400 leading-snug md:leading-normal text-center md:text-left"
@@ -488,7 +524,7 @@ export default function HomePage(props) {
 
           {data.page.researchSection.researchToggle && (
             <div
-              className="px-10 sm:px-20 md:px-24 lg:px-32 mt-16 lg:mt-20 py-16 lg:py-20"
+              className="px-10 sm:px-20 md:px-24 lg:px-32 py-16 lg:py-20"
               style={{ color: fontColor, backgroundColor: backgroundColor2 }}
               id="researchSection"
             >
@@ -799,7 +835,7 @@ export default function HomePage(props) {
                             color: workshopsTextColor,
                             backgroundColor: workshopsBackgroundColor,
                           }}
-                          data-tina-field={tinaField(item, "year")}
+                          // data-tina-field={tinaField(item, "year")}
                           key={index}
                           onClick={() => setSelectedWorkshop(item.title)}
                         >
@@ -895,16 +931,24 @@ export default function HomePage(props) {
                     {data.page.footer.contactEmail.contactEmailText}
                   </a>
                 )}
-                {data.page.footer.footerLegalPages.map((item, index) => (
-                  <div
-                    className="text-sm text-center sm:text-right font-medium cursor-pointer whitespace-nowrap"
-                    data-tina-field={tinaField(item, "title")}
-                    key={index}
-                    onClick={() => setViewLegalPage(`${item.title}`)}
-                  >
-                    {item.title}
-                  </div>
-                ))}
+                {data.page.footer.footerLegalPages &&
+                  data.page.footer.footerLegalPages.map((item, index) => (
+                    <div
+                      className="text-sm text-center sm:text-right font-medium whitespace-nowrap"
+                      // data-tina-field={tinaField(item, "title")}
+                      key={index}
+                    >
+                      <div
+                        className="cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setViewLegalPage(`${item.title}`);
+                        }}
+                      >
+                        {item.title}
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
           )}

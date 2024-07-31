@@ -61,22 +61,41 @@ export default {
           description: "Toggle the display of the section",
         },
         {
+          name: "sectionBackgroundColor",
+          label: "Section Background Color",
+          description: "The background color for the hero section",
+          type: "string",
+          options: ["Background Color 1", "Background Color 2"],
+          required: true,
+        },
+        {
           name: "mainImage",
           label: "Main Image",
           type: "image",
           description: "The main image for the hero section",
         },
         {
+          name: "smallImageCropDirection",
+          label: "Small Image Crop Direction",
+          type: "string",
+          description: "The crop direction for the small image",
+          options: ["Center", "Left", "Right"],
+          required: true,
+        },
+        {
           name: "title",
           label: "Title",
           type: "rich-text",
           description: "The title for the hero section",
+          toolbarOverride: ["bold", "italic"],
+          required: true,
         },
         {
           name: "aboutPara1",
           label: "Description Paragraph 1",
           type: "string",
           description: "The first paragraph for description",
+          required: true,
           // validate: (value) => {
           //   if (!value || value.trim() === "") {
           //     return "This field is required.";
